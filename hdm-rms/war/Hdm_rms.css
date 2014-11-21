@@ -32,3 +32,8 @@ h1 {
 #closeButton {
   margin: 15px 6px 6px;
 }
+/** Headbar Klassen zB Logo */
+#head_wrap_left img{  
+	width: 80px; 
+}
+
