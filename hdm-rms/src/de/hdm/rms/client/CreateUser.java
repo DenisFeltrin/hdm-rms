@@ -29,8 +29,10 @@ public class CreateUser extends VerticalPanel {
 	
 	public void onLoad() {
 		
+		this.clear();
+  
 		
-		RootPanel.get("content_wrap").add(CreateUserPanel);
+
 		CreateUserPanel.add(firstNameLabel);
 		CreateUserPanel.add(firstName);
 		CreateUserPanel.add(lastNameLabel);
@@ -42,7 +44,8 @@ public class CreateUser extends VerticalPanel {
 		CreateUserPanel.add(userRegisterBtn);
 		
 
-
+		RootPanel.get("content_wrap").add(CreateUserPanel);
+		
 		// Methode die aufgerufen wird bei Clickhandler 
 		userRegisterBtn.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
