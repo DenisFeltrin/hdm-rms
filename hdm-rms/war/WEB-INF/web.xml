@@ -8,7 +8,7 @@
   <!-- Servlets -->
   <servlet>
     <servlet-name>greetServlet</servlet-name>
-    <servlet-class>de.hdm.rms.server.GreetingServiceImpl</servlet-class>
+    <servlet-class>de.hdm.rms.server.ReservationServiceImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
