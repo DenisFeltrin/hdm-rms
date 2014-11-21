@@ -6,15 +6,16 @@
          xmlns="http://java.sun.com/xml/ns/javaee">
 
   <!-- Servlets -->
-  <servlet>
-    <servlet-name>greetServlet</servlet-name>
+      <servlet>
+    <servlet-name>ReservationServiceImpl</servlet-name>
     <servlet-class>de.hdm.rms.server.ReservationServiceImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
-    <servlet-name>greetServlet</servlet-name>
-    <url-pattern>/hdm_rms/greet</url-pattern>
+    <servlet-name>ReservationServiceImpl</servlet-name>
+    <url-pattern>/hdm_rms/reservationservice</url-pattern>
   </servlet-mapping>
+  
   
   <!-- Default page to serve -->
   <welcome-file-list>

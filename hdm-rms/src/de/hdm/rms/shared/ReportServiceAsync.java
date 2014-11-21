@@ -1,4 +1,4 @@
-package de.hdm.rms.client;
+package de.hdm.rms.shared;
 
 public interface ReportServiceAsync {
 

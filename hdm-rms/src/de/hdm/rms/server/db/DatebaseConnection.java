@@ -1,4 +1,4 @@
-package de.hdm.server.db;
+package de.hdm.rms.server.db;
 
 import com.google.appengine.api.rdbms.AppEngineDriver;
 import java.sql.*;
@@ -18,7 +18,7 @@ public class DatebaseConnection {
 		   try {
 		    DriverManager.registerDriver(new AppEngineDriver());
 		    
-		    con = DriverManager.getConnection("jdbc:mysql://188.40.58.9:3306/itprojekt_02", "itprojekt", "Hvsc232_");
+		    con = DriverManager.getConnection("jdbc:mysql://188.40.58.9:3306/itprojekt_02", "itprojekt", "blabla123");
 		    //con = DriverManager.getConnection("jdbc:google:rdbms://hdm1337:hdmsql/hotelverwaltung", "root", ""); // Create connection with user-credentials
 		   } 
 		   

@@ -1,14 +1,18 @@
-package de.hdm.rms.client;
+package de.hdm.rms.shared;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+
+import de.hdm.rms.shared.bo.User;
 
 
 /**
  * The client-side stub for the RPC service.
  */
-@RemoteServiceRelativePath("greet")
+@RemoteServiceRelativePath("reservationservice")
 public interface ReservationService extends RemoteService {
-	String greetServer(String name) throws IllegalArgumentException;
+
+	void insertUser(User u);
 
 }
