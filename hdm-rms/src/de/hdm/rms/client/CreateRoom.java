@@ -11,9 +11,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.sun.java.swing.plaf.windows.resources.windows;
-
 import java.lang.*;
-
 import de.hdm.rms.shared.ReservationService;
 import de.hdm.rms.shared.ReservationServiceAsync;
 import de.hdm.rms.shared.bo.Room;
@@ -29,8 +27,7 @@ public class CreateRoom extends VerticalPanel {
 	private final Label capaticityLabel = new Label("Kapazität");
 
 	private Room r;
-	private final ReservationServiceAsync AsyncObj = GWT
-			.create(ReservationService.class);
+	private final ReservationServiceAsync AsyncObj = GWT.create(ReservationService.class);
 
 	public CreateRoom() {
 	}

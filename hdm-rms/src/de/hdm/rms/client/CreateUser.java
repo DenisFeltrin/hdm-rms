@@ -10,7 +10,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.sun.java.swing.plaf.windows.resources.windows;
+
 
 import de.hdm.rms.shared.ReservationService;
 import de.hdm.rms.shared.ReservationServiceAsync;
@@ -36,16 +36,8 @@ public class CreateUser extends VerticalPanel {
 	}
 
 	public void onLoad() {
-<<<<<<< HEAD
 
 		RootPanel.get("content_wrap").add(CreateUserPanel);
-=======
-		
-		this.clear();
-  
-		
-
->>>>>>> refs/remotes/denis/Mario
 		CreateUserPanel.add(firstNameLabel);
 		CreateUserPanel.add(firstName);
 		CreateUserPanel.add(lastNameLabel);
@@ -56,13 +48,7 @@ public class CreateUser extends VerticalPanel {
 		CreateUserPanel.add(email);
 		CreateUserPanel.add(userRegisterBtn);
 
-<<<<<<< HEAD
 		// Methode die aufgerufen wird bei Clickhandler
-=======
-		RootPanel.get("content_wrap").add(CreateUserPanel);
-		
-		// Methode die aufgerufen wird bei Clickhandler 
->>>>>>> refs/remotes/denis/Mario
 		userRegisterBtn.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				if (firstName.getValue().isEmpty()
@@ -79,13 +65,11 @@ public class CreateUser extends VerticalPanel {
 
 					AsyncObj.insertUser(u, new AsyncCallback<Void>() {
 
-						@Override
 						public void onFailure(Throwable caught) {
 							// TODO Auto-generated method stub
 
 						}
 
-						@Override
 						public void onSuccess(Void result) {
 							Window.alert("Benutzer registriert");
 

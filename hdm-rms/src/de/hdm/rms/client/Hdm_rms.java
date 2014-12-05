@@ -109,10 +109,10 @@ class Hdm_rms implements EntryPoint {
 		RootPanel.get("head_wrap_right").add(UserMainMenu);
 		
 	     //CreateUser CreateUserView = new CreateUser();
-		 DeleteUser DeleteUserView = new DeleteUser();
+		// DeleteUser DeleteUserView = new DeleteUser();
 		
 	 	 //RootPanel.get("content_wrap").add(CreateUserView);
-		 RootPanel.get("content_wrap").add(DeleteUserView);
+		// RootPanel.get("content_wrap").add(DeleteUserView);
 		 
 		 UserMainMenu.setStylePrimaryName("menuListStyle");
 		 
