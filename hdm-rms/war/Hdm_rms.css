@@ -33,7 +33,62 @@ h1 {
   margin: 15px 6px 6px;
 }
 /** Headbar Klassen zB Logo */
+#head_wrap{  
+background:#252525; 
+line-height:35px;
+}
 #head_wrap_left img{  
+	padding-top:4px;
+	padding-left:3px;
 	width: 80px; 
+	border:none;
 }
 
+#head_wrap_left  {  
+	float:left; 
+	width: auto;
+
+ }
+
+#head_wrap_right{  
+		font-weight:bold;
+	width:100%;
+	 margin-left:250px;
+	 color:#fff;
+
+ }
+ 
+ /*css-Formatierungen Hauptmenü*/
+ .menuListStyle{
+ color:#fff;
+ font-size:13px;
+ max-width:850px;
+ 
+ }
+ 
+  .gwt-MenuBar-horizontal{
+ color:#fff;
+ border:none !Important;
+ margin-left:15px;
+margin-right:15px;
+ }
+ 
+  .gwt-MenuBar-vertical .gwt-MenuItem{
+ background:#fff !Important;
+ border:none !Important;
+ }
+
+  .gwt-MenuItem{
+ padding-right:15px;
+text-align:left;
+border-left:1px solid #767676; 
+padding-left:2px;
+ }
+
+
+ /*Contentbereich*/
+ 
+ #content_wrap {width:auto; text-align:left; background:#f3f3f3; 
+  }
+ 
+ 

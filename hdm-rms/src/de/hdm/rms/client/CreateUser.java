@@ -36,8 +36,16 @@ public class CreateUser extends VerticalPanel {
 	}
 
 	public void onLoad() {
+<<<<<<< HEAD
 
 		RootPanel.get("content_wrap").add(CreateUserPanel);
+=======
+		
+		this.clear();
+  
+		
+
+>>>>>>> refs/remotes/denis/Mario
 		CreateUserPanel.add(firstNameLabel);
 		CreateUserPanel.add(firstName);
 		CreateUserPanel.add(lastNameLabel);
@@ -48,7 +56,13 @@ public class CreateUser extends VerticalPanel {
 		CreateUserPanel.add(email);
 		CreateUserPanel.add(userRegisterBtn);
 
+<<<<<<< HEAD
 		// Methode die aufgerufen wird bei Clickhandler
+=======
+		RootPanel.get("content_wrap").add(CreateUserPanel);
+		
+		// Methode die aufgerufen wird bei Clickhandler 
+>>>>>>> refs/remotes/denis/Mario
 		userRegisterBtn.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				if (firstName.getValue().isEmpty()
