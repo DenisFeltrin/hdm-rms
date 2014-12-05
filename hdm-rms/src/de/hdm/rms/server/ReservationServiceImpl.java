@@ -1,8 +1,12 @@
 package de.hdm.rms.server;
 
 import de.hdm.rms.shared.ReservationService;
+import de.hdm.rms.server.db.RoomMapper;
 import de.hdm.rms.server.db.UserMapper;
+import de.hdm.rms.shared.bo.Room;
 import de.hdm.rms.shared.bo.User;
+
+
 
 
 //import com.google.gwt.sample.stockwatcher.shared.FieldVerifier;
@@ -15,9 +19,11 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class ReservationServiceImpl extends RemoteServiceServlet implements
 		ReservationService {
 	private UserMapper uMapper = null;
+	private RoomMapper rMapper = null;
 
 	public void init() throws IllegalArgumentException {
 		this.uMapper = UserMapper.userMapper();
+		this.rMapper = RoomMapper.roomMapper();
 
 	}
 
@@ -25,6 +31,12 @@ public class ReservationServiceImpl extends RemoteServiceServlet implements
 	public void insertUser(User u) {
 		uMapper.insertUser(u);
 
+	}
+
+	@Override
+	public void insertRoom(Room r) {
+		rMapper.insertRoom(r);
+		
 	}
 
 }

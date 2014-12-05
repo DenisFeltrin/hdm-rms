@@ -4,6 +4,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
+import de.hdm.rms.shared.bo.Room;
 import de.hdm.rms.shared.bo.User;
 
 
@@ -14,5 +15,7 @@ import de.hdm.rms.shared.bo.User;
 public interface ReservationService extends RemoteService {
 
 	void insertUser(User u);
+
+	void insertRoom(Room r);
 
 }

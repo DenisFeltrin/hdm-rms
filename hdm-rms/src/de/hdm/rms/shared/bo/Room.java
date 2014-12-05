@@ -5,19 +5,20 @@ public class Room extends BusinessObject{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private String description;
-	private int maxMember;
-	public int getMaxMember() {
-		return maxMember;
+	private String name;
+	private String capaticity;
+	public String getName() {
+		return name;
 	}
-	public void setMaxMember(int maxMember) {
-		this.maxMember = maxMember;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getDescription() {
-		return description;
+	public String getCapaticity() {
+		return capaticity;
 	}
-	public void setDescription(String description) {
-		this.description = description;
+	public void setCapaticity(String capaticity) {
+		this.capaticity = capaticity;
 	}
+
 
 }
