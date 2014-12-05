@@ -10,6 +10,7 @@ import de.hdm.rms.shared.bo.Room;
 public class RoomMapper {
 
 
+	//Test, ob Projekt hochgeladen wurde (05.12.2014, 15 Uhr)
 		private static RoomMapper roomMapper = null;
 
 		protected RoomMapper() {
