@@ -21,6 +21,8 @@ public interface ReservationService extends RemoteService {
 	void insertReservation(Reservation re);
 
 	void insertInvitation(Invitation i);
+	
+	void updateInvitationById(Invitation i);
 
 	User OneUserById(int userId);
 
@@ -33,5 +35,13 @@ public interface ReservationService extends RemoteService {
 	void updateRoomById(Room r);
 
 	void deleteRoomById(int roomId);
+
+	void deleteInvitationById(int invitationId);
+
+	void deleteReservationById(int reservationId);
+
+	void updateReservationById(Reservation r);
+
+	Reservation OneReservationById(int reservationId);
 
 }

@@ -1,5 +1,7 @@
 package de.hdm.rms.shared;
 
-public interface ReportService {
+import com.google.gwt.user.client.rpc.RemoteService;
+
+public interface ReportService extends RemoteService {
 
 }

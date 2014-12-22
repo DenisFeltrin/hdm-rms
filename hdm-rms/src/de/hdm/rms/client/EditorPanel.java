@@ -16,7 +16,7 @@ import de.hdm.rms.shared.bo.Reservation;
 import de.hdm.rms.shared.bo.Room;
 import de.hdm.rms.shared.bo.User;
 
-public class AdministationPanel extends VerticalPanel {
+public class EditorPanel extends VerticalPanel {
 	
 	  public class createUser extends Showcase  {
 		  
@@ -69,7 +69,6 @@ public class AdministationPanel extends VerticalPanel {
 			  
 		  public createUser(){
 
-						RootPanel.get("content_wrap").add(CreateUserPanel);
 						CreateUserPanel.add(firstNameLabel);
 						CreateUserPanel.add(firstName);
 						CreateUserPanel.add(lastNameLabel);
@@ -79,6 +78,7 @@ public class AdministationPanel extends VerticalPanel {
 						CreateUserPanel.add(emailLabel);
 						CreateUserPanel.add(email);
 						CreateUserPanel.add(userRegisterBtn);
+						RootPanel.get("content_wrap").add(CreateUserPanel);
 
 					}
 
@@ -144,7 +144,7 @@ public class AdministationPanel extends VerticalPanel {
 						EditUserPanel.add(userDeleteBtn);
 						EditUserPanel.add(userEditBtn);
 						
-						  RootPanel.get("content_wrap").add(EditUserPanel);
+						RootPanel.get("content_wrap").add(EditUserPanel);
 
 					}
 
@@ -278,12 +278,12 @@ public class AdministationPanel extends VerticalPanel {
 			  public createRoom(){
 	 				 
 					RootPanel.get("content_wrap").clear();
-					RootPanel.get("content_wrap").add(CreateRoomPanel);
 					CreateRoomPanel.add(nameLabel);
 					CreateRoomPanel.add(name);
 					CreateRoomPanel.add(capaticityLabel);
 					CreateRoomPanel.add(capaticity);
 					CreateRoomPanel.add(roomRegisterBtn);
+					RootPanel.get("content_wrap").add(CreateRoomPanel);
 
 				}
 
@@ -602,58 +602,130 @@ public class AdministationPanel extends VerticalPanel {
 			
 	  }  
 
-	  public class EditReservation extends Showcase {
-		  
-		 	private ReservationServiceAsync reservationAdministration = ClientSettings.getReservationService();
-		  
-		 	private final VerticalPanel EditReservationPanel = new VerticalPanel();
-			private final Button deleteReservationBtn = new Button("Reservierung löschen.");
-			private final Button editReservationBtn = new Button("Reservierungsdaten werden geändert.");
-			private final TextBox startTime = new TextBox();
-			private final TextBox length = new TextBox();
-			private final TextBox room = new TextBox();
-			private final TextBox nickname = new TextBox();
-			private final TextBox topic = new TextBox();
-			private final Label startTimeLabel = new Label("Beginn der Reservierung");
-			private final Label lengthLabel = new Label("Dauer der Reservierung");
-			private final Label roomLabel = new Label("Raum auswählen");
-			private final Label nickNameLabel = new Label("Nutzer einladen");
-			private final Label topicLabel = new Label("Veranstaltungsbeschreibung");
-			private Reservation re;
-			
-			  public void run() {
-				  
-				  editReservationBtn.addClickHandler(new ClickHandler() {
-						public void onClick(ClickEvent event) {
-							if (startTime.getValue().isEmpty()
-									|| length.getValue().isEmpty()
-									|| room.getValue().isEmpty()
-									|| nickname.getValue().isEmpty()
-									|| topic.getValue().isEmpty()) {
-								Window.alert("Die Reservierung konnte nicht geladen werden.");
-								
-							} else {
-								
-								//Reservierung editieren
-								
-							}
-							
-						}
-					});
-				  
-			  }
-			
-			public EditReservation() {
-				
-				RootPanel.get("content_wrap").clear();
-				
-			}
-
-			@Override
-			public String getHeadline() {
-				return null;
-			}
-		  
-	  }
+//	  public class EditReservation extends Showcase {
+//		  
+//		 	private ReservationServiceAsync reservationAdministration = ClientSettings.getReservationService();
+//		  
+//		 	private final VerticalPanel EditReservationPanel = new VerticalPanel();
+//			private final Button deleteReservationBtn = new Button("Reservierung löschen.");
+//			private final Button editReservationBtn = new Button("Reservierungsdaten werden geändert.");
+//			private final TextBox startTime = new TextBox();
+//			private final TextBox length = new TextBox();
+//			private final TextBox room = new TextBox();
+//			private final TextBox nickname = new TextBox();
+//			private final TextBox topic = new TextBox();
+//			private final Label startTimeLabel = new Label("Beginn der Reservierung");
+//			private final Label lengthLabel = new Label("Dauer der Reservierung");
+//			private final Label roomLabel = new Label("Raum auswählen");
+//			private final Label nickNameLabel = new Label("Nutzer einladen");
+//			private final Label topicLabel = new Label("Veranstaltungsbeschreibung");
+//			private Reservation re;
+//			
+//			  public void loadReservationData(int reservationId){
+//				  
+//					reservationAdministration.OneReservationById (reservationId, new AsyncCallback<Reservation>() {
+//
+//						@Override
+//						public void onFailure(Throwable caught) {
+//							Window.alert("Reservierung konnte nicht geladen werden.");
+//
+//						}
+//
+//						@Override
+//						public void onSuccess(Reservation result) {
+//							Window.alert("Folgende Reservierung wurde geladen: " +  result.getTopic());
+//							
+//							startTime.setText(result.getStartTime());
+//							length.setText(result.getLength());
+//							room.setText(result.getRoom());
+//							nickname.setText(result.getNickname());
+//							topic.setText(result.getTopic());
+//							
+//						/*	idBox.setText("Test-ID " + result.getId());
+//							EditReservationPanel.add(iDLabel);
+//							EditReservationPanel.add(idBox);
+//						*/
+//							
+//							EditReservationPanel.add(startTimeLabel);
+//							EditReservationPanel.add(startTime);
+//							EditReservationPanel.add(lengthLabel);
+//							EditReservationPanel.add(length);
+//							EditReservationPanel.add(nickNameLabel);
+//							EditReservationPanel.add(nickname);
+//							EditReservationPanel.add(roomLabel);
+//							EditReservationPanel.add(room);
+//							EditReservationPanel.add(topicLabel);
+//							EditReservationPanel.add(topic);
+//							EditReservationPanel.add(editReservationBtn);
+//							EditReservationPanel.add(deleteReservationBtn);
+//							
+//							RootPanel.get("content_wrap").add(EditReservationPanel);
+//
+//						}
+//
+//					});
+//			  
+//			  }
+//			
+//			public Boolean updateReservation(Reservation r){
+//				  
+//					reservationAdministration.updateReservationById (r, new AsyncCallback<Void>() {
+//						@Override
+//						public void onFailure(Throwable caught) {
+//							Window.alert("Reservierung konnte nicht geändert werden.");
+//						}
+//
+//						@Override
+//						public void onSuccess(Void result) {
+//							Window.alert("Die Reservierungsdaten wurden geändert.");						
+//							
+//						}
+//				  
+//			  });
+//					return null;
+//				}
+//			
+//			  public void run() {
+//				  
+//				  editReservationBtn.addClickHandler(new ClickHandler() {
+//						public void onClick(ClickEvent event) {
+//							if (startTime.getValue().isEmpty()
+//									|| length.getValue().isEmpty()
+//									|| room.getValue().isEmpty()
+//									|| nickname.getValue().isEmpty()
+//									|| topic.getValue().isEmpty()) {
+//								Window.alert("Die Reservierung konnte nicht geladen werden.");
+//								
+//							} else {
+//								
+//								Reservation r = new Reservation();
+//								startTime.getText();
+//								length.getText();
+//								room.getText();
+//								nickname.getText();
+//								topic.getText();
+//								 updateReservation(r);
+//								
+//							}
+//							
+//						}
+//					});
+//				  
+//			  }
+//			
+//			public EditReservation() {
+//				
+//				RootPanel.get("content_wrap").clear();
+//							 
+//					  loadReservationData(reservationId);
+//				
+//			}
+//
+//			@Override
+//			public String getHeadline() {
+//				return null;
+//			}
+//		  
+//	  }
 
 }

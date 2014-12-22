@@ -28,5 +28,16 @@ public interface ReservationServiceAsync {
 	void updateRoomById(Room r, AsyncCallback<Void> asyncCallback);
 
 	void deleteRoomById(int roomId, AsyncCallback<Void> asyncCallback);
+
+	void deleteInvitationById(int invitationId, AsyncCallback<Void> callback);
+
+	void updateInvitationById(Invitation i, AsyncCallback<Void> callback);
+
+	void deleteReservationById(int reservationId, AsyncCallback<Void> callback);
+
+	void updateReservationById(Reservation r, AsyncCallback<Void> callback);
+
+	void OneReservationById(int reservationId,
+			AsyncCallback<Reservation> asyncCallback);
 	
 }

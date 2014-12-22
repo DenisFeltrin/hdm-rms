@@ -89,4 +89,41 @@ public class ReservationServiceImpl extends RemoteServiceServlet implements
 		
 	}
 
+	@Override
+	public void deleteInvitationById(int invitationId) {
+		
+		iMapper.deleteInvitationById(invitationId);
+		
+	}
+
+	@Override
+	public void updateInvitationById(Invitation i) {
+		Boolean status =null;
+		
+		status = iMapper.updateInvitation(i);
+		
+	}
+	
+	@Override
+	public void deleteReservationById(int reservationId) {
+		
+		resMapper.deleteReservationById(reservationId);
+		
+	}
+
+	@Override
+	public void updateReservationById(Reservation r) {
+		Boolean status =null;
+		
+		status = resMapper.updateReservation(r);
+		
+	}
+
+//	@Override
+//	public Reservation OneReservationById(int reservationId) {
+//		Reservation r = new Reservation();
+//		r = resMapper.OneReservationById(reservationId);
+// 		return r;
+//	}
+
 }

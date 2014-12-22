@@ -11,7 +11,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
-import de.hdm.rms.client.AdministationPanel.createUser;
+import de.hdm.rms.client.EditorPanel.createUser;
 
 class Hdm_rms implements EntryPoint, ClickHandler   {
 	
@@ -63,22 +63,29 @@ class Hdm_rms implements EntryPoint, ClickHandler   {
 
 	    if (sender == startBtn) {
 	      // handle b1 being clicked
+	    	RootPanel.get("content_wrap").clear();
+	    	
 	    } else if (sender == raumreservierung_btn) {
 	    	RootPanel.get("content_wrap").clear();
-			RootPanel.get("content_wrap").add( new AdministationPanel().new CreateReservation());
+			RootPanel.get("content_wrap").add( new EditorPanel().new CreateReservation());
+			//RootPanel.get("content_wrap").add( new EditorPanel().new EditReservation());
 
 	    } else if (sender == reportBtn) {
-			RootPanel.get("content_wrap").add( new AdministationPanel().new CreateInvitation());
+	    	RootPanel.get("content_wrap").clear();
+			//RootPanel.get("content_wrap").add( new EditorPanel().new CreateInvitation());
+			//RootPanel.get("content_wrap").add( new EditorPanel().new EditInvitation());
+	    	RootPanel.get("content_wrap").add(new ReportPanel().new createReportOne());
+	    	RootPanel.get("content_wrap").add(new ReportPanel().new createReportTwo());
 		     
 		} else if (sender == profilBtn) {
 			RootPanel.get("content_wrap").clear();
-			//RootPanel.get("content_wrap").add( new AdministationPanel().new createUser());
-			RootPanel.get("content_wrap").add( new AdministationPanel().new EditUser());
+			RootPanel.get("content_wrap").add( new EditorPanel().new createUser());
+			RootPanel.get("content_wrap").add( new EditorPanel().new EditUser());
 			
 		}else if (sender == einstellungen_btn) {
 			RootPanel.get("content_wrap").clear();
-			//RootPanel.get("content_wrap").add( new AdministationPanel().new createRoom());
-			RootPanel.get("content_wrap").add( new AdministationPanel().new EditRoom());
+			RootPanel.get("content_wrap").add( new EditorPanel().new createRoom());
+			RootPanel.get("content_wrap").add( new EditorPanel().new EditRoom());
 
 			    }
 		

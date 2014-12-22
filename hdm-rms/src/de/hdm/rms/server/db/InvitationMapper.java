@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Statement;
 import de.hdm.rms.shared.bo.Invitation;
 import de.hdm.rms.shared.bo.Room;
+import de.hdm.rms.shared.bo.User;
 
 public class InvitationMapper {
 
@@ -36,6 +37,41 @@ public class InvitationMapper {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void deleteInvitationById(int invitationId) {
+		 
+		Connection con = DatebaseConnection.connection();
+		Invitation i = new Invitation();
+		
+		try {
+			
+		     Statement stmt = con.createStatement();
+
+		      stmt.executeUpdate("DELETE FROM Invitation " + "WHERE id=" + 1 +";");	
+ 
+		} catch (Exception e) {
+			e.printStackTrace();
+ 		}
+	
+ 	}
+	
+	public Boolean updateInvitation(Invitation i) {
+		Connection con = DatebaseConnection.connection();
+
+		try{
+			Statement state = con.createStatement();
+			
+			state.executeUpdate( "UPDATE  `Invitation`" + "SET `AcceptionStatus`=\"" + "2" + "\", " +  "`CreationDate`=\"" + "31.12.2014" + "\" "  + "WHERE Id="  +"1" );
+			
+				return true;
+
+		} catch (Exception e){
+			e.printStackTrace();
+			
+		}
+		
+		return null;
 	}
 
 }
