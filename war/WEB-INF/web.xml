@@ -16,6 +16,15 @@
     <url-pattern>/hdm_rms/reservationservice</url-pattern>
   </servlet-mapping>
   
+   <servlet>
+    <servlet-name>ReportServiceImpl</servlet-name>
+    <servlet-class>de.hdm.rms.server.ReportServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>ReportServiceImpl</servlet-name>
+    <url-pattern>/hdm_rms/reportservice</url-pattern>
+  </servlet-mapping>
   
   <!-- Default page to serve -->
   <welcome-file-list>
