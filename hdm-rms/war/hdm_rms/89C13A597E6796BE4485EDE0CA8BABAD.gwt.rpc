@@ -1,0 +1,16 @@
+com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException, true, true, true, true, com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException/3936916533, 3936916533
+com.google.gwt.user.client.rpc.RpcTokenException, true, true, false, false, com.google.gwt.user.client.rpc.RpcTokenException/2345075298, 2345075298
+com.google.gwt.user.client.rpc.XsrfToken, false, false, true, true, com.google.gwt.user.client.rpc.XsrfToken/4254043109, 4254043109
+de.hdm.rms.shared.ReservationService, false, false, false, false, _, 3495209902
+de.hdm.rms.shared.bo.BusinessObject, true, false, true, false, de.hdm.rms.shared.bo.BusinessObject/4189765287, 4189765287
+de.hdm.rms.shared.bo.Invitation, false, false, true, true, de.hdm.rms.shared.bo.Invitation/824908650, 824908650
+de.hdm.rms.shared.bo.InvitationListObj, false, false, true, true, de.hdm.rms.shared.bo.InvitationListObj/3523524021, 3523524021
+de.hdm.rms.shared.bo.Reservation, true, true, true, true, de.hdm.rms.shared.bo.Reservation/1310112979, 1310112979
+de.hdm.rms.shared.bo.ReservationListObj, true, true, true, true, de.hdm.rms.shared.bo.ReservationListObj/3151490115, 3151490115
+de.hdm.rms.shared.bo.Room, true, true, true, true, de.hdm.rms.shared.bo.Room/3788878830, 3788878830
+de.hdm.rms.shared.bo.User, true, true, true, true, de.hdm.rms.shared.bo.User/3719273783, 3719273783
+java.lang.Exception, true, false, true, false, java.lang.Exception/1920171873, 1920171873
+java.lang.RuntimeException, true, false, true, false, java.lang.RuntimeException/515124647, 515124647
+java.lang.String, true, true, true, true, java.lang.String/2004016611, 2004016611
+java.lang.Throwable, true, false, true, false, java.lang.Throwable/2953622131, 2953622131
+java.util.ArrayList, true, true, false, false, java.util.ArrayList/4159755760, 4159755760
