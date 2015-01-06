@@ -1,8 +1,14 @@
 package de.hdm.rms.server.db;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+
 import de.hdm.rms.shared.bo.Invitation;
+import de.hdm.rms.shared.bo.InvitationListObj;
+import de.hdm.rms.shared.bo.ReservationListObj;
 import de.hdm.rms.shared.bo.Room;
 import de.hdm.rms.shared.bo.User;
 
@@ -72,6 +78,35 @@ public class InvitationMapper {
 		}
 		
 		return null;
+	}
+
+	public ArrayList<InvitationListObj> loadAllInvitationsById() {
+		Connection con = DatebaseConnection.connection();
+		ArrayList<InvitationListObj> resultList = new ArrayList<>();
+		try {
+			Statement state = con.createStatement();
+ 
+			
+			ResultSet result = state.executeQuery("  SELECT AcceptionStatus, Firstname, Lastname, EMail, Nickname FROM Invitation INNER JOIN User ON Invitation.MemberId = User.Id");
+			while (result.next() ) {
+			 
+ 				InvitationListObj i = new InvitationListObj(); 
+			//	i.setId(result.getInt("Id"));
+				i.setFirstName(result.getString("Firstname"));
+				i.setLastName(result.getString("Lastname"));
+				i.setEMail(result.getString("EMail"));
+//				i.setAcceptionStatus(result.getInt("acceptionStatus"));
+				
+				//i.setNickname(result.getString("Topic"));
+			//	r.setCapacity(result.getInt("Capacity"));
+				resultList.add(i); // Add person-object to Arraylist
+			 }
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return resultList;
 	}
 
 }

@@ -9,7 +9,29 @@ public class Reservation extends BusinessObject {
 	private int hostId;
 	private int roomId;
 	private int Id;
+	
+	
+	public Reservation(String topic, int startTime, int length, int hostId, int roomId, int Id ){
+		
+		this.topic = topic;
+		this.startTime = startTime;
+		this.length = length;
+		this.hostId = hostId;
+		this.roomId = roomId; 
+		this.Id = Id; 
+		
+		
+		
+	}
 
+	public Reservation(  ){
+		
+	  
+		
+		
+		
+	}
+	
 	public String getTopic() {
 		return topic;
 	}

@@ -22,6 +22,7 @@ public class ShowAllReservationsById extends Showcase {
 
 	  private final VerticalPanel CreateRoomPanel = new VerticalPanel();
 	  int temp_user_id = 1;
+	  ArrayList<Reservation> arrayList = new ArrayList<Reservation>();
 	  //private final Button roomRegisterBtn = new Button("Raum anlegen");
 	  //private final TextBox name = new TextBox();
 	  //private final TextBox capaticity = new TextBox();
@@ -31,21 +32,31 @@ public class ShowAllReservationsById extends Showcase {
 	//  private Room r;
 	
 	 
-
+public ArrayList<Reservation>  getArrayList(){
 	
-	public void loadReservationsByID(int temp_user_id){
+	
+	
+	return arrayList;
+	
+	
+	
+}
+	
+	public void loadAllReservationsByHostId(int temp_user_id){
 		
-		reservationAdministration.loadReservationsByID(temp_user_id, new  AsyncCallback<ArrayList<Reservation>>(){
+		reservationAdministration.loadAllReservationsByHostId(temp_user_id, new  AsyncCallback<ArrayList<Reservation>>(){
 			@Override
 			public void onFailure(Throwable caught) {
 			}
 			@Override
 			public void onSuccess(ArrayList<Reservation> result) {
 
-				for(int i = 0; i< result.size(); i++){
+				
+				arrayList = result;
+				//for(int i = 0; i< result.size(); i++){
 					
-					
-				}
+				
+				//}
 				
 			
 			

@@ -1,13 +1,16 @@
 package de.hdm.rms.shared;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import de.hdm.rms.shared.bo.Invitation;
+import de.hdm.rms.shared.bo.InvitationListObj;
 import de.hdm.rms.shared.bo.Reservation;
+import de.hdm.rms.shared.bo.ReservationListObj;
 import de.hdm.rms.shared.bo.Room;
 import de.hdm.rms.shared.bo.User;
 
@@ -47,6 +50,12 @@ public interface ReservationService extends RemoteService {
 
 	Reservation OneReservationById(int reservationId);
 
-	ArrayList<Reservation> loadReservationsByID(int temp_user_id);
+	ArrayList<Reservation> loadAllReservationsByHostId(int temp_user_id);
+
+	ArrayList<Reservation> loadAllReservations();
+
+	ArrayList<ReservationListObj> loadAllReservationsAsList();
+
+	ArrayList<InvitationListObj> loadInvitationsById();
 
 }

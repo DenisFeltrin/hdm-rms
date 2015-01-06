@@ -1,11 +1,14 @@
 package de.hdm.rms.shared;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.hdm.rms.shared.bo.Invitation;
+import de.hdm.rms.shared.bo.InvitationListObj;
 import de.hdm.rms.shared.bo.Reservation;
+import de.hdm.rms.shared.bo.ReservationListObj;
 import de.hdm.rms.shared.bo.Room;
 import de.hdm.rms.shared.bo.User;
 
@@ -42,7 +45,15 @@ public interface ReservationServiceAsync {
 	void OneReservationById(int reservationId,
 			AsyncCallback<Reservation> asyncCallback);
 
-	void loadReservationsByID(int temp_user_id,
+	void loadAllReservationsByHostId(int temp_user_id,
 			AsyncCallback<ArrayList<Reservation>> asyncCallback);
+
+	void loadAllReservations(AsyncCallback<ArrayList<Reservation>> asyncCallback);
+
+	void loadAllReservationsAsList(
+			AsyncCallback<ArrayList<ReservationListObj>> asyncCallback);
+
+	void loadInvitationsById(
+			AsyncCallback<ArrayList<InvitationListObj>> asyncCallback);
 	
 }

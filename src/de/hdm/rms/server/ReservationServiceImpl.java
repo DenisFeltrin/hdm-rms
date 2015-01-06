@@ -1,6 +1,7 @@
 package de.hdm.rms.server;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdm.rms.shared.ReservationService;
 import de.hdm.rms.server.db.InvitationMapper;
@@ -8,7 +9,9 @@ import de.hdm.rms.server.db.ReservationMapper;
 import de.hdm.rms.server.db.RoomMapper;
 import de.hdm.rms.server.db.UserMapper;
 import de.hdm.rms.shared.bo.Invitation;
+import de.hdm.rms.shared.bo.InvitationListObj;
 import de.hdm.rms.shared.bo.Reservation;
+import de.hdm.rms.shared.bo.ReservationListObj;
 import de.hdm.rms.shared.bo.Room;
 import de.hdm.rms.shared.bo.User;
 
@@ -129,7 +132,7 @@ public class ReservationServiceImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public ArrayList<Reservation> loadReservationsByID(int temp_user_id) {
+	public ArrayList<Reservation> loadAllReservationsByHostId(int temp_user_id) {
  
 	 
 		ArrayList<Reservation> reservationlist = resMapper.loadReservationsByID(temp_user_id);
@@ -141,7 +144,36 @@ public class ReservationServiceImpl extends RemoteServiceServlet implements
 		
 	}
 
-//	@Override
+	@Override
+	public ArrayList<Reservation> loadAllReservations() {
+
+		ArrayList<Reservation> reservationlist = resMapper.loadAllReservations();
+		if (!reservationlist.isEmpty()) {
+			return reservationlist;
+		} else {
+			return null;
+		}
+ 	}
+
+	@Override
+	public ArrayList<ReservationListObj> loadAllReservationsAsList() {
+		ArrayList<ReservationListObj> reservationlist = resMapper.loadAllReservationsAsList();
+		if (!reservationlist.isEmpty()) {
+			return reservationlist;
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public ArrayList<InvitationListObj> loadInvitationsById() {
+		ArrayList<InvitationListObj> invitationList = iMapper.loadAllInvitationsById();
+ 			return invitationList;
+		 
+	}
+
+	
+ //	@Override
 //	public Reservation OneReservationById(int reservationId) {
 //		Reservation r = new Reservation();
 //		r = resMapper.OneReservationById(reservationId);
