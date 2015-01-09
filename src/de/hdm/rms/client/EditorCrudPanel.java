@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -547,14 +548,21 @@ public class EditorCrudPanel extends VerticalPanel {
 		  private final HorizontalPanel userPanel = new HorizontalPanel();
 		  private final VerticalPanel userPanelLabel = new VerticalPanel();
 
+		  private final HorizontalPanel timeBarPanel = new HorizontalPanel();
 
 
 		  private final Button userAddBtn = new Button("Nutzer zur Teilnehmerliste hinzufügen");
 		  private final Button sendReservationBtn = new Button("Reservierung erstellen.");
 		//  private final TextBox startTime = new TextBox();
-		  private final TextBox length = new TextBox();
-		  private final TextBox roomDropdown = new TextBox();
-		  private final TextBox nicknameDropdown = new TextBox();
+		  private final ListBox startTimeHour = new ListBox();
+		  private final ListBox startTimeMinutes = new ListBox();
+
+		  private ListBox   endTimeHour = new ListBox();
+		  private ListBox   endTimeMinutes = new ListBox();
+
+
+		  private final ListBox roomDropdown = new ListBox();
+		  private final ListBox nicknameDropdown = new ListBox();
 		  private final TextBox topicBox = new TextBox();
 		  private final Label startTimeLabel = new Label("Beginn der Reservierung");
 		
@@ -568,9 +576,9 @@ public class EditorCrudPanel extends VerticalPanel {
 		  public CreateReservation(){
 			  	//super.get("content_wrap").clear();
 			  DateTimeFormat dateFormat = DateTimeFormat.getLongDateFormat();
-			    DateBox startTime = new DateBox();
-			    startTime.setFormat(new DateBox.DefaultFormat(dateFormat));
-			    startTime.getDatePicker().setYearArrowsVisible(true);
+			    DateBox startDay = new DateBox();
+			    startDay.setFormat(new DateBox.DefaultFormat(dateFormat));
+			    startDay.getDatePicker().setYearArrowsVisible(true);
 			    
 				CreateReservationPanel.add(topicLabel);
 				CreateReservationPanel.add(topicBox);
@@ -579,11 +587,14 @@ public class EditorCrudPanel extends VerticalPanel {
 				CreateReservationPanel.add(roomDropdown);
 
 				dataSmallPanelLeft.add(startTimeLabel);
-				dataSmallPanelLeft.add(startTime);
 				
-				dataSmallPanelRight.add(lengthLabel);
-				dataSmallPanelRight.add(length);
-				
+				timeBarPanel.add(startTimeHour );
+				timeBarPanel.add( startTimeMinutes);
+				timeBarPanel.add(endTimeHour );
+				timeBarPanel.add(endTimeMinutes );
+				dataSmallPanelLeft.add(timeBarPanel);
+				dataSmallPanelRight.add(startDay);
+
 				
 				dataPanel.add(dataSmallPanelRight);
 				dataPanel.add(dataSmallPanelLeft);
@@ -605,7 +616,7 @@ public class EditorCrudPanel extends VerticalPanel {
 			  topicBox.setHeight("20px");
 			  topicBox.setWidth("700px");
 
-			  roomDropdown.setHeight("20px");
+			  roomDropdown.setHeight("35px");
 			  roomDropdown.setWidth("700px");
 			  
 				sendReservationBtn.addClickHandler(new ClickHandler() {

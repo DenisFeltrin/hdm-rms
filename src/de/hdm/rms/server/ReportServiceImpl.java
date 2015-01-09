@@ -55,5 +55,7 @@ public class ReportServiceImpl extends RemoteServiceServlet implements
 
 		return u;
 	}
+	
+	
 
 }

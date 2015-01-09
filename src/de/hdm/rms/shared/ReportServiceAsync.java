@@ -13,4 +13,6 @@ public interface ReportServiceAsync {
 	void getOneUserIdByNickname(String selectedNickname,
 			AsyncCallback<User> callback);
 
+ 
+
 }
