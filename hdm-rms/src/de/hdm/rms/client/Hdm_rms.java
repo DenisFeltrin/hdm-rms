@@ -78,12 +78,12 @@ class Hdm_rms implements EntryPoint, ClickHandler   {
 			RootPanel.get("content_wrap").add( new TestClassTableWIdget());
 
 		//	RootPanel.get("content_wrap").add( new EditorPanel().new createUser());
-		//	RootPanel.get("content_wrap").add( new EditorPanel().new EditUser());
 			
 		}else if (sender == einstellungen_btn) {
 			RootPanel.get("content_wrap").clear();
-			RootPanel.get("content_wrap").add( new EditorCrudPanel().new createRoom());
-			RootPanel.get("content_wrap").add( new EditorCrudPanel().new EditRoom());
+			RootPanel.get("content_wrap").add(new EditorCrudPanel().new EditRoom());
+			RootPanel.get("content_wrap").add(new EditorCrudPanel().new createRoom());
+			RootPanel.get("content_wrap").add(new EditorCrudPanel().new EditUser());
 
 			    }
 		

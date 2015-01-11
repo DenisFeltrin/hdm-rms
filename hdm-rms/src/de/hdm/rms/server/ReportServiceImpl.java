@@ -1,22 +1,11 @@
 package de.hdm.rms.server;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import de.hdm.rms.shared.ReportService;
-import de.hdm.rms.shared.ReservationService;
-import de.hdm.rms.server.db.InvitationMapper;
-import de.hdm.rms.server.db.ReservationMapper;
 import de.hdm.rms.server.db.RoomMapper;
 import de.hdm.rms.server.db.UserMapper;
-import de.hdm.rms.shared.bo.Invitation;
-import de.hdm.rms.shared.bo.InvitationListObj;
-import de.hdm.rms.shared.bo.Reservation;
-import de.hdm.rms.shared.bo.ReservationListObj;
 import de.hdm.rms.shared.bo.Room;
 import de.hdm.rms.shared.bo.User;
-
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**

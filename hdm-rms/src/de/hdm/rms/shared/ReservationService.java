@@ -49,4 +49,8 @@ public interface ReservationService extends RemoteService {
 
 	ArrayList<Reservation> loadReservationsByID(int temp_user_id);
 
+	ArrayList<Room> getAllRooms();
+
+	Room getOneRoomIdByName(String selectedRoom);
+
 }

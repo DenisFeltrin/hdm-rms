@@ -15,7 +15,8 @@ public class DatebaseConnection {
 		   try {
 		    DriverManager.registerDriver(new AppEngineDriver());
 		    
-		    con = DriverManager.getConnection("jdbc:mysql://188.40.58.9:3306/itprojekt_02", "itprojekt", "blabla123");
+		    con = DriverManager.getConnection("jdbc:mysql://188.40.58.9:3306/test_delete_plz3", "test_delete_plz3", "blabla123");
+		    //con = DriverManager.getConnection("jdbc:mysql://188.40.58.9:3306/itprojekt_02", "itprojekt", "blabla123");
 		    //con = DriverManager.getConnection("jdbc:google:rdbms://hdm1337:hdmsql/hotelverwaltung", "root", ""); // Create connection with user-credentials
 		   } 
 		   

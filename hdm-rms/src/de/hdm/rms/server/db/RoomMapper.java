@@ -52,7 +52,7 @@ public class RoomMapper {
 
 			try {
 				Statement state = con.createStatement();
-				ResultSet rs = state.executeQuery("SELECT *  FROM `Room` "  + "WHERE `Id`= '1' ;" );
+				ResultSet rs = state.executeQuery("SELECT *  FROM `Room` "  + "WHERE `Id`= '2' ;" );
 	 			
 				   if (rs.next()) {
 				        // Ergebnis-Tupel in Objekt umwandeln
@@ -75,13 +75,13 @@ public class RoomMapper {
 		public void deleteRoomById(int roomId) {
 			 
 			Connection con = DatebaseConnection.connection();
-			Room r = new Room();
+			
 			
 			try {
 				
 			     Statement stmt = con.createStatement();
 
-			      stmt.executeUpdate("DELETE FROM Room " + "WHERE id=" + 1 +";");	
+			      stmt.executeUpdate("DELETE FROM Room " + "WHERE id=" + roomId +";");	
 	 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -89,22 +89,23 @@ public class RoomMapper {
 		
 	 	}
 		
-		public Boolean updateRoom(Room r) {
+		public void updateRoomById(Room r) {
 			Connection con = DatebaseConnection.connection();
 
 			try{
 				Statement state = con.createStatement();
 				
-				state.executeUpdate( "UPDATE  `Room`" + "SET `Capacity`=\"" + "99" + "\", " +  "`Name`=\"" + "TestRaum" + "\" "  + "WHERE Id="  +"1" );
-				
-					return true;
+				state.executeUpdate("UPDATE `Room` SET `Name`= '" +
+						r.getName() + "', "  + 
+					    "`Capacity`= '" +
+						r.getCapaticity() +  "' " +
+					    "WHERE `Id` = '" + r.getId()+"';");
 
 			} catch (Exception e){
 				e.printStackTrace();
 				
 			}
-			
-			return null;
+
 		}
 
 		public ArrayList<Room> getAllRooms() {
@@ -131,7 +132,7 @@ public class RoomMapper {
 			return resultList;
 		}
 
-		public Room getRoomIdByName(String selectedName) {
+		public Room getOneRoomIdByName(String selectedRoom) {
 			Connection con = DatebaseConnection.connection();
 			Room r = new Room();
 			try {
@@ -139,12 +140,13 @@ public class RoomMapper {
 				Statement state = con.createStatement();
 				ResultSet rs = state
 						.executeQuery("SELECT * FROM Room WHERE name='"
-								+ selectedName + "'");
+								+ selectedRoom + "';");
 
 				while (rs.next()) {
 
-					r.setId(rs.getInt("id"));
-					r.setName(rs.getString("name"));
+					r.setId(rs.getInt("Id"));
+					r.setName(rs.getString("Name"));
+					r.setCapaticity(rs.getString("Capacity"));
 
 				}
 

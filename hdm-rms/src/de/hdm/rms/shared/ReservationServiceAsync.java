@@ -44,5 +44,10 @@ public interface ReservationServiceAsync {
 
 	void loadReservationsByID(int temp_user_id,
 			AsyncCallback<ArrayList<Reservation>> asyncCallback);
+
+	void getAllRooms(AsyncCallback<ArrayList<Room>> asyncCallback);
+
+	void getOneRoomIdByName(String selectedRoom,
+			AsyncCallback<Room> asyncCallback);
 	
 }

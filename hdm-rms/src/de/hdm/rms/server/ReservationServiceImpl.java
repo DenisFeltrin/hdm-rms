@@ -1,7 +1,6 @@
 package de.hdm.rms.server;
 
 import java.util.ArrayList;
-
 import de.hdm.rms.shared.ReservationService;
 import de.hdm.rms.server.db.InvitationMapper;
 import de.hdm.rms.server.db.ReservationMapper;
@@ -11,8 +10,6 @@ import de.hdm.rms.shared.bo.Invitation;
 import de.hdm.rms.shared.bo.Reservation;
 import de.hdm.rms.shared.bo.Room;
 import de.hdm.rms.shared.bo.User;
-
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
@@ -21,6 +18,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 @SuppressWarnings("serial")
 public class ReservationServiceImpl extends RemoteServiceServlet implements
 		ReservationService {
+
 	private UserMapper uMapper = null;
 	private RoomMapper rMapper = null;
 	private InvitationMapper iMapper = null;
@@ -33,17 +31,17 @@ public class ReservationServiceImpl extends RemoteServiceServlet implements
 		this.resMapper = ReservationMapper.reservationMapperv();
 	}
 
- 	public void insertUser(User u) {
+	public void insertUser(User u) {
 		uMapper.insertUser(u);
 	}
 
- 	public void insertRoom(Room r) {
+	public void insertRoom(Room r) {
 		rMapper.insertRoom(r);
 	}
 
 	@Override
 	public void insertReservation(Reservation re) {
-		resMapper.insertReservation(re);	
+		resMapper.insertReservation(re);
 	}
 
 	@Override
@@ -55,19 +53,19 @@ public class ReservationServiceImpl extends RemoteServiceServlet implements
 	public User OneUserById(int userId) {
 		User u = new User();
 		u = uMapper.OneUserById(userId);
- 		return u;
+		return u;
 	}
 
 	@Override
 	public void deleteUserById(int userId) {
-		
+
 		uMapper.deleteUserById(userId);
 	}
 
 	@Override
 	public void updateUserById(User u) {
-		Boolean status =null;
-		
+		Boolean status = null;
+
 		status = uMapper.updateUser(u);
 	}
 
@@ -75,51 +73,49 @@ public class ReservationServiceImpl extends RemoteServiceServlet implements
 	public Room OneRoomById(int roomId) {
 		Room r = new Room();
 		r = rMapper.OneRoomById(roomId);
- 		return r;
+		return r;
 	}
 
 	@Override
 	public void updateRoomById(Room r) {
-		Boolean status =null;
-		
-		status = rMapper.updateRoom(r);
+		rMapper.updateRoomById(r);
 	}
 
 	@Override
 	public void deleteRoomById(int roomId) {
-		
+
 		rMapper.deleteRoomById(roomId);
-		
+
 	}
 
 	@Override
 	public void deleteInvitationById(int invitationId) {
-		
+
 		iMapper.deleteInvitationById(invitationId);
-		
+
 	}
 
 	@Override
 	public void updateInvitationById(Invitation i) {
-		Boolean status =null;
-		
+		Boolean status = null;
+
 		status = iMapper.updateInvitation(i);
-		
+
 	}
-	
+
 	@Override
 	public void deleteReservationById(int reservationId) {
-		
+
 		resMapper.deleteReservationById(reservationId);
-		
+
 	}
 
 	@Override
 	public void updateReservationById(Reservation r) {
-		Boolean status =null;
-		
+		Boolean status = null;
+
 		status = resMapper.updateReservation(r);
-		
+
 	}
 
 	@Override
@@ -130,22 +126,42 @@ public class ReservationServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public ArrayList<Reservation> loadReservationsByID(int temp_user_id) {
- 
-	 
-		ArrayList<Reservation> reservationlist = resMapper.loadReservationsByID(temp_user_id);
+
+		ArrayList<Reservation> reservationlist = resMapper
+				.loadReservationsByID(temp_user_id);
 		if (!reservationlist.isEmpty()) {
 			return reservationlist;
 		} else {
 			return null;
 		}
-		
+
 	}
 
-//	@Override
-//	public Reservation OneReservationById(int reservationId) {
-//		Reservation r = new Reservation();
-//		r = resMapper.OneReservationById(reservationId);
-// 		return r;
-//	}
+	@Override
+	public ArrayList<Room> getAllRooms() throws IllegalArgumentException {
+		init();
+		ArrayList<Room> listit = rMapper.getAllRooms();
+		if (!listit.isEmpty()) {
+			return listit;
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public Room getOneRoomIdByName(String selectedRoom) {
+
+		Room ra = new Room();
+		ra = rMapper.getOneRoomIdByName(selectedRoom);
+
+		return ra;
+	}
+
+	// @Override
+	// public Reservation OneReservationById(int reservationId) {
+	// Reservation r = new Reservation();
+	// r = resMapper.OneReservationById(reservationId);
+	// return r;
+	// }
 
 }

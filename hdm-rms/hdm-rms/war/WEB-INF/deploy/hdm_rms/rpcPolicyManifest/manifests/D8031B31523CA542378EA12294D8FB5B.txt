@@ -1,2 +1,0 @@
-serviceClass: de.hdm.rms.shared.ReservationService
-path: EC2D9D2BB86757C095DEC213F6FCC8E0.gwt.rpc
