@@ -125,7 +125,7 @@ public class UserMapper {
 				User u = new User(); // Create new person-object to fill
 										// with values from database
 				u.setId(result.getInt("id"));
-				u.setNickName(result.getString("nickname"));
+				u.setNickName(result.getString("Nickname"));
 
 				resultList.add(u); // Add person-object to Arraylist
 			}
@@ -144,16 +144,16 @@ public class UserMapper {
 
 			Statement state = con.createStatement();
 			ResultSet rs = state
-					.executeQuery("SELECT * FROM User WHERE nickname='"
+					.executeQuery("SELECT * FROM User WHERE Nickname='"
 							+ selectedNickname + "'");
 
 			while (rs.next()) {
 
-				u.setId(rs.getInt("id"));
-				u.setFirstName(rs.getString("firstname"));
-				u.setLastName(rs.getString("lastname"));
-				u.setEmailAdress(rs.getString("email"));
-				u.setNickName(rs.getString("nickname"));
+				u.setId(rs.getInt("Id"));
+				u.setFirstName(rs.getString("Firstname"));
+				u.setLastName(rs.getString("Lastname"));
+				u.setEmailAdress(rs.getString("EMail"));
+				u.setNickName(rs.getString("Nickname"));
 
 			}
 

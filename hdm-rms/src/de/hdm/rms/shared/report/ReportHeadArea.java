@@ -4,30 +4,59 @@ import java.util.Date;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
+import de.hdm.rms.client.ClientSettings;
+import de.hdm.rms.shared.ReportServiceAsync;
+import de.hdm.rms.shared.bo.User;
 
+public class ReportHeadArea implements Serializable {
+	private static final long serialVersionUID = 1L;
+	private ReportServiceAsync reportAdministration = ClientSettings
+			.getReportService();
 
-
-public class ReportHeadArea implements Serializable{
-	 private static final long serialVersionUID = 1L;
 	private String Title = "rms";
-	private String UserName = "TestUser";
-	private String firstName = "FIrstname";
-	private String lastName = "LastName ";
+	private String TitleOfReport = "Report";
+
+	private User u;
 
 	DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 	Date ReportDate = new Date();
 
-	// System.out.println(dateFormat.format(date));
+	public User getHeaderOfReportTwo(String selectedNickname) {
+		RootPanel.get("content_wrap").clear();
+		reportAdministration.getOneUserIdByNickname(selectedNickname,
+				new AsyncCallback<User>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onSuccess(User result) {
+						u.setFirstName(result.getFirstName());
+						u.setLastName(result.getLastName());
+						u.setNickName(result.getNickName());
+						u.setId(result.getId());
+
+					}
+
+				});
+		return u;
+	}
+
 	public void onLoad() {
 		final HTML html = new HTML("");
-		html.setHTML("<h1>" + Title + "</h1></br>" 	
-		+ "<h1>" + UserName	+ "</h1></br>" 
-		+ "<h1>" + firstName + "</h1></br>"
-		+ "<h1>" + lastName + "</h1></br>"
-		+ "<h1>" + dateFormat.format(ReportDate) + "</h1>");
+
+		html.setHTML("<html><head><title>" + TitleOfReport
+				+ "</title></head><body>" + "<h1>" + Title + "</h1></br>"
+				+ "<h1>" + u.getNickName() + "</h1></br>" + "<h1>"
+				+ u.getFirstName() + "</h1></br>" + "<h1>" + u.getLastName()
+				+ "</h1></br>" + "<h1>" + dateFormat.format(ReportDate)
+				+ "</h1>");
 
 		RootPanel.get("content_wrap").add(html);
 	}

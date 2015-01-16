@@ -36,9 +36,10 @@ public class ReportServiceImpl extends RemoteServiceServlet implements
 	public User getOneUserIdByNickname(String selectedNickname) {
 		init();
 
-		User u = new User();
+		User us = new User();
+		us = uMapper.getUserIdByUserNickname(selectedNickname);
 
-		return u;
+		return us;
 	}
 
 	@Override

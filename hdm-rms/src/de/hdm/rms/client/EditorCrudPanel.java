@@ -237,7 +237,7 @@ public class EditorCrudPanel extends VerticalPanel {
 		}
 
 		public EditUser() {
-
+			RootPanel.get("content_wrap").clear();
 			loadUserData(userId);
 
 		}
@@ -296,7 +296,7 @@ public class EditorCrudPanel extends VerticalPanel {
 
 		public createRoom() {
 
-			//RootPanel.get("content_wrap").clear();
+			RootPanel.get("content_wrap").clear();
 			CreateRoomPanel.add(headlineLabel);
 			CreateRoomPanel.add(nameLabel);
 			CreateRoomPanel.add(name);
@@ -530,7 +530,7 @@ public class EditorCrudPanel extends VerticalPanel {
 		}
 
 		public EditRoom() {
-
+			RootPanel.get("content_wrap").clear();
 			loadRoomData(roomId);
 
 		}

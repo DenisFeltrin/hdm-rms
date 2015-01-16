@@ -11,9 +11,9 @@ public class Row implements Serializable {
 		this.columns.addElement(c);
 	}
 
-	public void delColumn(Column c) {
-		this.columns.removeElement(c);
-	}
+//	public void delColumn(Column c) {
+//		this.columns.removeElement(c);
+//	}
 
 	public Vector<Column> getColumns() {
 		return this.columns;
