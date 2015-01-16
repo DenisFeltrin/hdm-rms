@@ -21,6 +21,8 @@ import de.hdm.rms.shared.ReportServiceAsync;
 import de.hdm.rms.shared.ReservationServiceAsync;
 import de.hdm.rms.shared.bo.Room;
 import de.hdm.rms.shared.bo.User;
+import de.hdm.rms.shared.report.HTMLReportWriter;
+import de.hdm.rms.shared.report.Report;
 
 public class ReportPanel extends VerticalPanel {
 
@@ -33,12 +35,12 @@ public class ReportPanel extends VerticalPanel {
 		private final VerticalPanel CreateReportOnePanel3 = new VerticalPanel();
 		private final Button createReportOneBtn = new Button(
 				"Report 1 erstellen");
-private final Label HeadlineReportOne = new Label("Report1");
-		private final TextBox Attribut2 = new TextBox();
+		private final Label HeadlineReportOne = new Label("Report1");
+		
 		final ListBox ListOfRooms = new ListBox();
 		private String selectedNickname2;
 		private HorizontalPanel HorizontalPanelReportOne = new HorizontalPanel();
-		
+
 		private DatePicker DatePickerFromReportOne = new DatePicker();
 		private DatePicker DatePickerToReportOne = new DatePicker();
 		private final Label DateLabelFromReportOne = new Label("Von");
@@ -66,14 +68,9 @@ private final Label HeadlineReportOne = new Label("Report1");
 		}
 
 		void loadRooms() {
-			// Dropdown aller vorhandenen User anzeigen
 
-			// ListOfNicknames.addItem("Eigene Pinnwand:" );
 			ListOfRooms.setSize("180px", "35px");
 			ListOfRooms.addStyleName("mainmenu-dropdown");
-
-			// Dropdown dem RootPanel zuordnen
-			// RootPanel.get("content_wrap").add(ListOfNicknames);
 
 			reportAdministration
 					.getAllRooms(new AsyncCallback<ArrayList<Room>>() {
@@ -93,35 +90,7 @@ private final Label HeadlineReportOne = new Label("Report1");
 									selectedNickname2 = getSelectedListBoxIndex(
 											ListOfRooms,
 											ListOfRooms.getSelectedIndex());
-									// ShowUserFromSelectedItem(ListOfNicknames,
-									// ListOfNicknames.getSelectedIndex());
-
-								}
-
-								public void ShowRoomFromSelectedItem(
-										ListBox ListOfRooms, int selectedIndex) {
-									// TODO Auto-generated method stub
-
-									String selectedRoom = ListOfRooms
-											.getItemText(selectedIndex);
-
-									reportAdministration.getOneRoomIdByName(
-											selectedRoom,
-											new AsyncCallback<Room>() {
-
-												@Override
-												public void onSuccess(
-														Room result) {
-
-												}
-
-												@Override
-												public void onFailure(
-														Throwable caught) {
-													Window.alert("asdasd");
-												}
-
-											});
+							
 
 								}
 
@@ -141,14 +110,14 @@ private final Label HeadlineReportOne = new Label("Report1");
 
 		@Override
 		public void run() {
-			// bankVerwaltung.getCustomerById(11, new
-			// DeleteCustomerCallback(this));
-			// Methode die aufgerufen wird bei Clickhandler
+
 			createReportOneBtn.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
-
+					int index = ListOfRooms.getSelectedIndex();
+					String selectedRoom = ListOfRooms.getValue(index);
+					HTMLReportWriter ReportOneToHTML = new HTMLReportWriter();
+					ReportOneToHTML.getHeaderOfReportOne(selectedRoom);
 					Window.alert("Report 1 wurde erstellt.");
-					Window.open("http://www.google.com/", "_blank", "");
 
 				}
 			});
@@ -170,7 +139,6 @@ private final Label HeadlineReportOne = new Label("Report1");
 			HorizontalPanelReportOne.add(CreateReportOnePanel3);
 			HorizontalPanelReportOne.add(createReportOneBtn);
 			RootPanel.get("content_wrap").add(HorizontalPanelReportOne);
-			
 
 		}
 
@@ -180,14 +148,14 @@ private final Label HeadlineReportOne = new Label("Report1");
 
 		private ReportServiceAsync reportAdministration = ClientSettings
 				.getReportService();
-		
+
 		private final HorizontalPanel HorizontalPanelReportTwo = new HorizontalPanel();
 		private ReservationServiceAsync reservationAdministration = ClientSettings
 				.getReservationService();
 		private final Button createReportTwoBtn = new Button(
 				"Report 2 erstellen");
-private final Label HeadlineReportTwo = new Label("Report2");
-		private final TextBox Attribut4 = new TextBox();
+		private final Label HeadlineReportTwo = new Label("Report2");
+		
 		final ListBox ListOfNicknames = new ListBox();
 		private String selectedNickname2;
 		private DatePicker DatePickerFromReportTwo = new DatePicker();
@@ -197,6 +165,7 @@ private final Label HeadlineReportTwo = new Label("Report2");
 		private final VerticalPanel CreateReportTwoPanel1 = new VerticalPanel();
 		private final VerticalPanel CreateReportTwoPanel2 = new VerticalPanel();
 		private final VerticalPanel CreateReportTwoPanel3 = new VerticalPanel();
+		private Report r;
 
 		private final Label Attribut3Label = new Label(
 				"Nutzer für den Report auswählen:");
@@ -227,9 +196,6 @@ private final Label HeadlineReportTwo = new Label("Report2");
 			ListOfNicknames.setSize("180px", "35px");
 			ListOfNicknames.addStyleName("mainmenu-dropdown");
 
-			// Dropdown dem RootPanel zuordnen
-			// RootPanel.get("content_wrap").add(ListOfNicknames);
-
 			reportAdministration
 					.getAllUsers(new AsyncCallback<ArrayList<User>>() {
 
@@ -242,51 +208,6 @@ private final Label HeadlineReportTwo = new Label("Report2");
 										.getNickName());
 
 							}
-
-							ListOfNicknames
-									.addChangeHandler(new ChangeHandler() {
-
-										public void onChange(ChangeEvent event) {
-
-											selectedNickname2 = getSelectedListBoxIndex(
-													ListOfNicknames,
-													ListOfNicknames
-															.getSelectedIndex());
-											// ShowUserFromSelectedItem(ListOfNicknames,
-											// ListOfNicknames.getSelectedIndex());
-
-										}
-
-										public void ShowUserFromSelectedItem(
-												ListBox listOfNicknames,
-												int selectedIndex) {
-											// TODO Auto-generated method stub
-
-											String selectedNickname = listOfNicknames
-													.getItemText(selectedIndex);
-
-											reportAdministration
-													.getOneUserIdByNickname(
-															selectedNickname,
-															new AsyncCallback<User>() {
-
-																@Override
-																public void onSuccess(
-																		User result) {
-
-																}
-
-																@Override
-																public void onFailure(
-																		Throwable caught) {
-																	Window.alert("asdasd");
-																}
-
-															});
-
-										}
-
-									});
 
 						}
 
@@ -303,15 +224,13 @@ private final Label HeadlineReportTwo = new Label("Report2");
 		@Override
 		public void run() {
 
-			// bankVerwaltung.getCustomerById(11, new
-			// DeleteCustomerCallback(this));
-			// Methode die aufgerufen wird bei Clickhandler
-
 			createReportTwoBtn.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
-
+					int index = ListOfNicknames.getSelectedIndex();
+					String selectedNickname = ListOfNicknames.getValue(index);
+					HTMLReportWriter ReportTwoToHTML = new HTMLReportWriter();
+					ReportTwoToHTML.getHeaderOfReportTwo(selectedNickname);
 					Window.alert("Report 2 wurde erstellt.");
-					Window.open("http://www.google.com/", "_blank", "");
 
 				}
 			});
