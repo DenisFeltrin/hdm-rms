@@ -1,13 +1,11 @@
 package de.hdm.rms.server.db;
 
 import de.hdm.rms.server.db.DatebaseConnection;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
 import de.hdm.rms.shared.bo.User;
 
 public class UserMapper {
@@ -113,7 +111,7 @@ public class UserMapper {
 		return null;
 	}
 
-	public ArrayList<User> getAllUsers() {
+	public ArrayList<User> loadAllUsers() {
 		Connection con = DatebaseConnection.connection();
 		ArrayList<User> resultList = new ArrayList<>();
 
@@ -137,30 +135,58 @@ public class UserMapper {
 		return resultList;
 	}
 
-	public User getUserIdByUserNickname(String selectedNickname) {
-		Connection con = DatebaseConnection.connection();
+	public String getEmailByAdress(int userId){
+	
+		
+		Connection con = DatebaseConnection.connection();	
 		User u = new User();
+
 		try {
-
 			Statement state = con.createStatement();
-			ResultSet rs = state
-					.executeQuery("SELECT * FROM User WHERE nickname='"
-							+ selectedNickname + "'");
-
+			ResultSet rs = state.executeQuery("SELECT * FROM User WHERE Id='" + userId + "'");
 			while (rs.next()) {
-
-				u.setId(rs.getInt("id"));
-				u.setFirstName(rs.getString("firstname"));
-				u.setLastName(rs.getString("lastname"));
-				u.setEmailAdress(rs.getString("email"));
-				u.setNickName(rs.getString("nickname"));
+			//	u.setId(rs.getInt("Id"));
+			//	u.setFirstName(rs.getString("Firstname"));
+			//	u.setLastName(rs.getString("Lastname"));
+				u.setEmailAdress(rs.getString("EMail"));
+			//	u.setNickName(rs.getString("Nickname"));
 
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-
 		}
+
+ 		return u.getEmailAdress(); 
+		
+	}
+	
+	
+	public User getUserIdByUserNickname(String selectedNickname) {
+
+		Connection con = DatebaseConnection.connection();	
+
+		User u = new User();
+
+		try {
+
+			Statement state = con.createStatement();
+			ResultSet rs = state.executeQuery("SELECT * FROM User WHERE Nickname='" + selectedNickname + "'");
+
+			while (rs.next()) {
+
+				u.setId(rs.getInt("Id"));
+				u.setFirstName(rs.getString("Firstname"));
+				u.setLastName(rs.getString("Lastname"));
+				u.setEmailAdress(rs.getString("EMail"));
+				u.setNickName(rs.getString("Nickname"));
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 		return u;
 	}
 

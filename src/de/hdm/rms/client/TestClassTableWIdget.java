@@ -45,58 +45,49 @@ public class TestClassTableWIdget  extends Showcase{
 		return null;
 	}
 
-
-	 
-
-    
- 
-
 	private Button editBtn = new Button("Eigene Reservierung bearbeiten");
-private Button statusBtn = new Button("Teilnehmerübersicht anzeigen");
-private Label resLabel = new Label("Meine Reservierungen   ");
-private Label resLabelText = new Label(" Hier ist eine Übersicht über, die von Ihnen organisierten Veranstaltungen, dargestellt. Sie können jederzeit die Reservierung oder die Teilnehmerlisten einsehen und Änderungen vorhnemen. /n Bitte wählen Sie hierzu einfach die entsprechende Veranstaltung aus unf klicken Sie auf einen der unten eingeblendeten Button - Teilnehmerliste einstehen oder Reservierung bearbeiten./n/n");
+	private Button statusBtn = new Button("Teilnehmerübersicht anzeigen");
+	private Label resLabel = new Label("Meine Reservierungen   ");
+	private Label resLabelText = new Label(" Hier ist eine Übersicht über, die von Ihnen organisierten Veranstaltungen, dargestellt. Sie können jederzeit die Reservierung oder die Teilnehmerlisten einsehen und Änderungen vorhnemen. /n Bitte wählen Sie hierzu einfach die entsprechende Veranstaltung aus unf klicken Sie auf einen der unten eingeblendeten Button - Teilnehmerliste einstehen oder Reservierung bearbeiten./n/n");
 
-private Label memLabel = new Label("Meine Teilnahmen  " );
-private Label memLabelText = new Label(" Hier ist eine Übersicht über, die von Ihnen organisierten Veranstaltungen, dargestellt. Sie können jederzeit die Reservierung oder die Teilnehmerlisten einsehen und Änderungen vorhnemen. /n Bitte wählen Sie hierzu einfach die entsprechende Veranstaltung aus unf klicken Sie auf einen der unten eingeblendeten Button - Teilnehmerliste einstehen oder Reservierung bearbeiten./n/n");
+	private Label memLabel = new Label("Meine Teilnahmen  " );
+	private Label memLabelText = new Label(" Hier ist eine Übersicht über, die von Ihnen organisierten Veranstaltungen, dargestellt. Sie können jederzeit die Reservierung oder die Teilnehmerlisten einsehen und Änderungen vorhnemen. /n Bitte wählen Sie hierzu einfach die entsprechende Veranstaltung aus unf klicken Sie auf einen der unten eingeblendeten Button - Teilnehmerliste einstehen oder Reservierung bearbeiten./n/n");
 
-
+	private Button yBtn = new Button("Teilnahme bestätigens");
+	private Button nBtn = new Button("Teilnahme ablehnen");
+	private HorizontalPanel yNPanel = new HorizontalPanel();
  
-private Button yBtn = new Button("Teilnahme bestätigens");
-private Button nBtn = new Button("Teilnahme ablehnen");
-private HorizontalPanel yNPanel = new HorizontalPanel();
- 
-private   static    List<ReservationListObj> ReservationList;
-private   static    List<ReservationListObj> ReservationListMember;
+	private   static    List<ReservationListObj> ReservationList;
+	private   static    List<ReservationListObj> ReservationListMember;
 
+	private   static     List<InvitationListObj> InvitationList;
 
-private   static     List<InvitationListObj> InvitationList;
+	/*Deklaration von Cell-Table für alle Reservierungen*/
+	CellTable<ReservationListObj> table = new CellTable<ReservationListObj>();
+	
+	/*Deklaration von Cell-Table für alle Reservierungen*/
+	CellTable<ReservationListObj> table1 = new CellTable<ReservationListObj>();
+	
+	
+	CellTable<InvitationListObj> InvitationTable = new CellTable<InvitationListObj>();
 
-/*Deklaration von Cell-Table für alle Reservierungen*/
-CellTable<ReservationListObj> table = new CellTable<ReservationListObj>();
-
-/*Deklaration von Cell-Table für alle Reservierungen*/
-CellTable<ReservationListObj> table1 = new CellTable<ReservationListObj>();
-
-
-CellTable<InvitationListObj> InvitationTable = new CellTable<InvitationListObj>();
-
-private DialogBox dp= new DialogBox();
-
-private Button cancleBtn = new Button("Schließen");
-
-private VerticalPanel InvitationPanel = new VerticalPanel();
-private final Label DialogBoxHeadline = new Label("Einladungen anzeigen");
-
-private ReservationServiceAsync reservationAdministration =  GWT.create(ReservationService.class);
-
-/*Test Kommentar Listhandler ruft comperator auf und vergleicht solanfe einträge bis Liste geordnet ist
-ListHandler<ReservationListObj> columnSortHandler0 = new ListHandler<ReservationListObj>(ReservationList);
-ListHandler<ReservationListObj> columnSortHandler1 = new ListHandler<ReservationListObj>(ReservationList);
-ListHandler<ReservationListObj> columnSortHandler2 = new ListHandler<ReservationListObj>(ReservationList);
-ListHandler<ReservationListObj> columnSortHandler3 = new ListHandler<ReservationListObj>(ReservationList);
-ListHandler<ReservationListObj> columnSortHandler4 = new ListHandler<ReservationListObj>(ReservationList);
-ListHandler<ReservationListObj> columnSortHandler5 = new ListHandler<ReservationListObj>(ReservationList);
-*/
+	private DialogBox dp= new DialogBox();
+	
+	private Button cancleBtn = new Button("Schließen");
+	
+	private VerticalPanel InvitationPanel = new VerticalPanel();
+	private final Label DialogBoxHeadline = new Label("Einladungen anzeigen");
+	
+	private ReservationServiceAsync reservationAdministration =  GWT.create(ReservationService.class);
+	
+	/*Test Kommentar Listhandler ruft comperator auf und vergleicht solanfe einträge bis Liste geordnet ist
+	ListHandler<ReservationListObj> columnSortHandler0 = new ListHandler<ReservationListObj>(ReservationList);
+	ListHandler<ReservationListObj> columnSortHandler1 = new ListHandler<ReservationListObj>(ReservationList);
+	ListHandler<ReservationListObj> columnSortHandler2 = new ListHandler<ReservationListObj>(ReservationList);
+	ListHandler<ReservationListObj> columnSortHandler3 = new ListHandler<ReservationListObj>(ReservationList);
+	ListHandler<ReservationListObj> columnSortHandler4 = new ListHandler<ReservationListObj>(ReservationList);
+	ListHandler<ReservationListObj> columnSortHandler5 = new ListHandler<ReservationListObj>(ReservationList);
+	*/
 
 
 
@@ -198,7 +189,7 @@ public  List<InvitationListObj>  loadAllInvitationDataByOnReservationId(int rese
 					      TextColumn<ReservationListObj> topicColumn = new TextColumn<ReservationListObj>() {
 					      @Override
 					      public String getValue(ReservationListObj object) {
-				    	  return String.valueOf(object.getLength());
+				    	  return String.valueOf(object.getNickname());
 							 }
 					      };
 					      table.addColumn(topicColumn, "Name der Veranstaltung");
@@ -215,7 +206,7 @@ public  List<InvitationListObj>  loadAllInvitationDataByOnReservationId(int rese
 					      TextColumn<ReservationListObj> lenghColumn = new TextColumn<ReservationListObj>() {
 					         @Override
 					         public String getValue(ReservationListObj object) {
-					            return String.valueOf(object.getLength());
+					            return String.valueOf(object.getNickname()); // lenght
 					         }
 					      };
 					      table.addColumn(lenghColumn, "Dauer (in Minuten)");
@@ -267,13 +258,13 @@ public  List<InvitationListObj>  loadAllInvitationDataByOnReservationId(int rese
 					         public void onSelectionChange(SelectionChangeEvent event) {
 					        	 final ReservationListObj selected = selectionModel.getSelectedObject();
 					            if (selected != null) {
-					             //  Window.alert("You selected: " + selected.reservationId);
+					               Window.alert("You selected: " + selected.getId());
 								      editBtn.setEnabled(true);
 								      statusBtn.setEnabled(true);
 								      
 								      editBtn.addClickHandler(new ClickHandler() {
 				 				    		public void onClick(ClickEvent event) { 
-				  				    	 	   RootPanel.get().add( new EditorCrudPanel().new EditReservation());
+				  				    	 	   RootPanel.get().add( new EditorCrudPanel().new EditReservation(selected.getId()));
 											}
 										});
 								      
@@ -448,7 +439,7 @@ public  List<InvitationListObj>  loadAllInvitationDataByOnReservationId(int rese
 						      TextColumn<ReservationListObj> topicColumn = new TextColumn<ReservationListObj>() {
 						      @Override
 						      public String getValue(ReservationListObj object) {
-					    	  return String.valueOf(object.getLength());
+					    	  return String.valueOf(object.getNickname()); // lenght
 								 }
 						      };
 						      table1.addColumn(topicColumn, "Name der Veranstaltung");
@@ -465,7 +456,7 @@ public  List<InvitationListObj>  loadAllInvitationDataByOnReservationId(int rese
 						      TextColumn<ReservationListObj> lenghColumn = new TextColumn<ReservationListObj>() {
 						         @Override
 						         public String getValue(ReservationListObj object) {
-						            return String.valueOf(object.getLength());
+						            return String.valueOf(object.getNickname()); // lenght
 						         }
 						      };
 						      table1.addColumn(lenghColumn, "Dauer (in Minuten)");

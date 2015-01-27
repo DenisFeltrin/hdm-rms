@@ -193,5 +193,20 @@ html>body .gwt-DialogBox {
 }
 .cw-DialogBox {
 }
+
+.headline{
+	font-size: 19px;
+	font-weight: bold;
+	margin-top: 12px;
+}
+
+.description{
+	line-height: 24px;
+	font-size: 14;
+	margin-bottom: 12px;
+}
  
  
+button.ReportBtn {
+	margin-top: 18px;
+ }

@@ -18,9 +18,7 @@ public interface ReservationServiceAsync {
 
 	void insertRoom(Room r, AsyncCallback<Void> asyncCallback);
 
-	void insertReservation(Reservation re, AsyncCallback<Void> asyncCallback);
-
-	 void insertInvitation(Invitation i, AsyncCallback<Void> asyncCallback);
+	void insertReservation(Reservation re, AsyncCallback<Reservation> asyncCallback);
 
 	void OneUserById(int userId, AsyncCallback<User> asyncCallback);
 
@@ -55,5 +53,25 @@ public interface ReservationServiceAsync {
 
 	void loadInvitationsById(
 			AsyncCallback<ArrayList<InvitationListObj>> asyncCallback);
+
+	void getAllUsers(AsyncCallback<ArrayList<User>> asyncCallback);
+
+	void getAllRooms(AsyncCallback<ArrayList<Room>> asyncCallback);
 	
+	void getOneRoomIdByName(String selectedRoom,AsyncCallback<Room> asyncCallback);
+
+	void loadUserDateByNickname(String selectedNickname,
+			AsyncCallback<User> asyncCallback);
+
+	void insertInvitation(ArrayList<Invitation> invitationListTemp, AsyncCallback<Void> asyncCallback);
+
+	void greetServer(String input, AsyncCallback<String> callback) throws IllegalArgumentException;
+//	void loginDetails(String token, AsyncCallback<LoginInfo> asyncCallback);
+//
+//	void login(String hostPageBaseURL, AsyncCallback<LoginInfo> asyncCallback);
+
+	void getUserEmail(String token, AsyncCallback<String> callback,
+			AsyncCallback<String> callback2);
+
+ 
 }

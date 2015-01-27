@@ -19,14 +19,14 @@ import de.hdm.rms.shared.bo.User;
  */
 @RemoteServiceRelativePath("reservationservice")
 public interface ReservationService extends RemoteService {
-
+	
 	void insertUser(User u);
 
 	void insertRoom(Room r);
 
-	void insertReservation(Reservation re);
+	Reservation insertReservation(Reservation re);
 
-	void insertInvitation(Invitation i);
+	void insertInvitation(ArrayList<Invitation> invitationListTemp);
 	
 	void updateInvitationById(Invitation i);
 
@@ -57,5 +57,21 @@ public interface ReservationService extends RemoteService {
 	ArrayList<ReservationListObj> loadAllReservationsAsList();
 
 	ArrayList<InvitationListObj> loadInvitationsById();
+
+	ArrayList<User> getAllUsers();
+
+	ArrayList<Room> getAllRooms();
+	
+	Room getOneRoomIdByName(String selectedRoom);
+
+	User loadUserDateByNickname(String selectedNickname);
+
+	String getUserEmail(String token, AsyncCallback<String> callback);
+	String greetServer(String name) throws IllegalArgumentException;
+
+//	LoginInfo login(String hostPageBaseURL);
+//
+//	LoginInfo loginDetails(String token);
+	
 
 }

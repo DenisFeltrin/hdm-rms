@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import de.hdm.rms.shared.bo.Room;
 import de.hdm.rms.shared.bo.User;
@@ -51,7 +52,7 @@ public class RoomMapper {
 
 			try {
 				Statement state = con.createStatement();
-				ResultSet rs = state.executeQuery("SELECT *  FROM `Room` "  + "WHERE `Id`= '1' ;" );
+				ResultSet rs = state.executeQuery("SELECT *  FROM `Room` "  + "WHERE `Id`= '2' ;" );
 	 			
 				   if (rs.next()) {
 				        // Ergebnis-Tupel in Objekt umwandeln
@@ -80,7 +81,7 @@ public class RoomMapper {
 				
 			     Statement stmt = con.createStatement();
 
-			      stmt.executeUpdate("DELETE FROM Room " + "WHERE id=" + 1 +";");	
+			      stmt.executeUpdate("DELETE FROM Room " + "WHERE id=" + roomId +";");	
 	 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -88,22 +89,69 @@ public class RoomMapper {
 		
 	 	}
 		
-		public Boolean updateRoom(Room r) {
+		public void updateRoomById(Room r) {
+
 			Connection con = DatebaseConnection.connection();
 
 			try{
+
 				Statement state = con.createStatement();
-				
-				state.executeUpdate( "UPDATE  `Room`" + "SET `Capacity`=\"" + "99" + "\", " +  "`Name`=\"" + "TestRaum" + "\" "  + "WHERE Id="  +"1" );
-				
-					return true;
+
+				state.executeUpdate("UPDATE `Room` SET `Name`= '" +	r.getName() + "', "  + "`Capacity`= '" + r.getCapaticity() +  "' " + "WHERE `Id` = '" + r.getId()+"';");
 
 			} catch (Exception e){
 				e.printStackTrace();
-				
+
 			}
-			
-			return null;
 		}
+
+		public ArrayList<Room> loadAllRooms() {
+			Connection con = DatebaseConnection.connection();
+			ArrayList<Room> resultList = new ArrayList<>();
+
+			try {
+				Statement state = con.createStatement();
+				ResultSet result = state.executeQuery("SELECT * FROM Room");
+
+				while (result.next()) {
+					Room r = new Room(); 
+					r.setId(result.getInt("Id"));
+					r.setName(result.getString("Name"));
+					//r.setCapaticity(result.getString("Capaticty"));
+
+					resultList.add(r); // Add person-object to Arraylist
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return resultList;
+		}
+		
+		public Room getOneRoomIdByName(String selectedRoom) {
+
+			Connection con = DatebaseConnection.connection();
+
+			Room r = new Room();
+
+			try {
+				Statement state = con.createStatement();
+				ResultSet rs = state.executeQuery("SELECT * FROM Room WHERE name='" + selectedRoom + "';");
+
+				while (rs.next()) {
+
+					r.setId(rs.getInt("Id"));
+					r.setName(rs.getString("Name"));
+					r.setCapaticity(rs.getString("Capacity"));
+
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+
+			}
+
+			return r;
+
+		} 
 
 	}

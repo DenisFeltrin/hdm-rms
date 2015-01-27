@@ -1,22 +1,24 @@
 package de.hdm.rms.shared.bo;
+ 
 
 public class Reservation extends BusinessObject {
 
 	private static final long serialVersionUID = 1L;
 	private String topic;
-	private int startTime;
-	private int length;
-	private int hostId;
+	private String startTime;
+	private String endTime;
+
+ 	private int hostId;
 	private int roomId;
 	private int Id;
 	
 	
-	public Reservation(String topic, int startTime, int length, int hostId, int roomId, int Id ){
+	public Reservation(String topic, String startTime,   int hostId, int roomId, int Id, String endTime ){
 		
 		this.topic = topic;
 		this.startTime = startTime;
-		this.length = length;
-		this.hostId = hostId;
+		this.setEndTime(endTime);
+ 		this.hostId = hostId;
 		this.roomId = roomId; 
 		this.Id = Id; 
 		
@@ -40,20 +42,12 @@ public class Reservation extends BusinessObject {
 		this.topic = topic;
 	}
 
-	public int getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(int startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
-	}
-
-	public int getLength() {
-		return length;
-	}
-
-	public void setLength(int length) {
-		this.length = length;
 	}
 
 	public int getRoomId() {
@@ -79,5 +73,15 @@ public class Reservation extends BusinessObject {
 	public void setHostId(int hostId) {
 		this.hostId = hostId;
 	}
+
+	public String getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+
+ 
 
 }

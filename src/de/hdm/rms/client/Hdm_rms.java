@@ -8,6 +8,11 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 import de.hdm.rms.client.EditorCrudPanel.CreateUser;
+ 
+
+import com.google.gwt.user.client.rpc.RemoteService;
+import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+ import de.hdm.rms.shared.LoginInfo;
 
 class Hdm_rms implements EntryPoint, ClickHandler   {
 	
@@ -36,6 +41,8 @@ class Hdm_rms implements EntryPoint, ClickHandler   {
       
 	public void onModuleLoad() {
 
+
+		
 		reportBtn.setHTML("<img border='0' src='img/report_btn.png' />");
 		profilBtn.setHTML("<img border='0' src='img/profil_btn.png' />");
 		startBtn.setHTML("<img border='0' src='img/startseite_btn.png' />");
@@ -82,8 +89,9 @@ class Hdm_rms implements EntryPoint, ClickHandler   {
 			
 		}else if (sender == einstellungen_btn) {
 			RootPanel.get("content_wrap").clear();
-			RootPanel.get("content_wrap").add( new EditorCrudPanel().new CreateRoom());
-			RootPanel.get("content_wrap").add( new EditorCrudPanel().new EditRoom());
+			RootPanel.get("content_wrap").add(new EditorCrudPanel().new EditRoom());
+			RootPanel.get("content_wrap").add(new EditorCrudPanel().new CreateRoom());
+			RootPanel.get("content_wrap").add(new EditorCrudPanel().new EditUser());
 
 			    }
 		

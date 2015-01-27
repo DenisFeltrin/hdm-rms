@@ -31,15 +31,20 @@ public class InvitationMapper {
 	public void insertInvitation(Invitation i) {
 		Connection con = DatebaseConnection.connection();
 		try {
+ 				 
 			Statement state = con.createStatement();
-			String sqlquery = "INSERT INTO Invitation (MemberId, AcceptionStatus) VALUES ("
+					String sqlquery = "INSERT INTO Invitation (MemberId, ReservationId, AcceptionStatus) VALUES ("
 					+ "'"
 					+ i.getMemberId()
+					+ "','"
+					+ i.getReservationId()
 					+ "','"
 					+ i.getAcceptionStatus()
 					+ "') ;";
 			state.executeUpdate(sqlquery);
 
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -108,5 +113,7 @@ public class InvitationMapper {
 
 		return resultList;
 	}
+	
+
 
 }

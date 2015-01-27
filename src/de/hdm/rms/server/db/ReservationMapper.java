@@ -5,7 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import com.google.gwt.i18n.shared.DateTimeFormat;
 
 import de.hdm.rms.shared.bo.Reservation;
 import de.hdm.rms.shared.bo.ReservationListObj;
@@ -28,11 +31,14 @@ public class ReservationMapper {
 		return reservationMapper;
 	}
 
-	public void insertReservation(Reservation re) {
+	public  void insertReservation(Reservation re) {
 		Connection con = DatebaseConnection.connection();
+		int resID = 0;
+		 
+		
 		try {
 			Statement state = con.createStatement();
-			String sqlquery = "INSERT INTO Reservation (HostId, Topic, RoomId, Length, StartTime) VALUES ("
+			String sqlquery = "INSERT INTO Reservation (`HostId`, `Topic`, `RoomId`, `EndTime`, `StartTime`) VALUES ("
 					+ "'"
 					+ re.getHostId()
 					+ "','"
@@ -40,7 +46,7 @@ public class ReservationMapper {
 					+ "','"
 					+ re.getRoomId()
 					+ "','"
-					+ re.getLength()
+					+ re.getEndTime() 
 					+ "','"
 					+ re.getStartTime()
 					+ "') ;";
@@ -49,6 +55,35 @@ public class ReservationMapper {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+ 		
+	}
+	
+//	INSERT INTO `test_delete_plz3`.`Reservation` (`Id`, `HostId`, `Topic`, `RoomId`, `EndTime`, `StartTime`, `CreationDate`) VALUES (NULL, '2', 'tesssssss', '4', '2015-01-06 00:00:00', '2015-01-06 04:00:00', CURRENT_TIMESTAMP);
+	
+	public Reservation selectReservationId(Reservation re) {
+		Connection con = DatebaseConnection.connection();
+		Reservation r = new Reservation(); 
+		try {
+	 
+			 
+ 
+			Statement state = con.createStatement();
+
+			ResultSet result = state.executeQuery("SELECT MAX(Id) FROM Reservation  ;");
+			while (result.next() ) {
+			  r.setId(result.getInt("MAX(Id)"));
+			}
+
+ 			 
+
+			 
+ 			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return r;
+		
 	}
 	
 	public void deleteReservationById(int reservationId) {
@@ -134,8 +169,9 @@ public class ReservationMapper {
 				Reservation r = new Reservation(); 
 				r.setId(result.getInt("Id"));
 				r.setRoomId(result.getInt("RoomId"));
-				r.setLength(result.getInt("Length"));
-				r.setStartTime(result.getInt("StartTime"));
+			//	r.setLength(result.getInt("Length"));
+			//	r.setEndTime(result.get("EndTime"));
+			//	r.setStartTime(result.getDate("StartTime"));
 				r.setTopic(result.getString("Topic"));
 				
 				
@@ -163,16 +199,16 @@ public class ReservationMapper {
 			Statement state = con.createStatement();
  
 			
-			ResultSet result = state.executeQuery("SELECT  Reservation.Id, Reservation.CreationDate,   Length, StartTime, Topic, RoomId, Room.Name, Capacity, EMail, Firstname, Lastname, Nickname FROM Reservation INNER JOIN Room ON Reservation.RoomId = Room.Id  Inner Join User On Reservation.HostId = User.Id;");
+			ResultSet result = state.executeQuery("SELECT  Reservation.Id, Reservation.CreationDate,   EndTime, StartTime, Topic, RoomId, Room.Name, Capacity, EMail, Firstname, Lastname, Nickname FROM Reservation INNER JOIN Room ON Reservation.RoomId = Room.Id  Inner Join User On Reservation.HostId = User.Id;");
 			while (result.next() ) {
 			 
 			 
 				ReservationListObj r = new ReservationListObj(); 
 				r.setId(result.getInt("Id"));
 				r.setRoomId(result.getInt("RoomId"));
-				r.setLength(result.getInt("Length"));
-				r.setStartTime(result.getInt("StartTime"));
-				r.setTopic(result.getString("Topic"));
+				r.setEndTime(result.getString("EndTime"));
+				r.setStartTime(result.getString("StartTime"));
+ 				r.setTopic(result.getString("Topic"));
 				
 			//	r.setCapacity(result.getInt("Capacity"));
 
@@ -196,35 +232,32 @@ public class ReservationMapper {
 		
 	 
 
-//	public Reservation OneReservationById(int reservationId) {
-//		
-//		Connection con = DatebaseConnection.connection();
-//		Reservation r = new Reservation();
-//
-//		try {
-//			Statement state = con.createStatement();
-//			ResultSet rs = state.executeQuery("SELECT *  FROM `Reservation` "  + "WHERE `Id`= '1' ;" );
-// 			
-//			   if (rs.next()) {
-//			        // Ergebnis-Tupel in Objekt umwandeln
-//			       // u.setId(userId);
-//			        r.setStartTime(rs.getString("StartTime"));
-//			        r.setLength(rs.getString("Length"));
-//			        r.setRoom(rs.getString("Room"));
-//			        r.setNickname(rs.getString("Nickname"));
-//			        r.setTopic(rs.getTopic("Topic"));
-//			        
-//			        r.setId(rs.getInt("Id"));
-//			        
-//			        return r;
-//			      }
-//			
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	
-//		return null;
-//	}
+	public Reservation OneReservationById(int reservationId) {
+		
+		Connection con = DatebaseConnection.connection();
+		Reservation r = new Reservation();
+
+		try {
+			Statement state = con.createStatement();
+			ResultSet rs = state.executeQuery("SELECT *  FROM `Reservation` "  + "WHERE `Id`='" + reservationId +"';" );
+ 			
+			while (rs.next() ) {
+ 			        r.setId(rs.getInt("Id"));
+			        r.setStartTime(rs.getString("StartTime"));
+			        r.setEndTime(rs.getString("EndTime"));
+ 			        r.setRoomId(rs.getInt("RoomId"));
+			        r.setHostId(rs.getInt("HostId"));
+			        r.setTopic(rs.getString("Topic"));
+			        
+ 			        
+ 			      }
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	
+		return r;
+	}
 	
 	
 
