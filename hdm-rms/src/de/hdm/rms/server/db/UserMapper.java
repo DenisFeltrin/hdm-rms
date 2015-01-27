@@ -1,13 +1,11 @@
 package de.hdm.rms.server.db;
 
 import de.hdm.rms.server.db.DatebaseConnection;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
 import de.hdm.rms.shared.bo.User;
 
 public class UserMapper {
@@ -52,8 +50,10 @@ public class UserMapper {
 
 		try {
 			Statement state = con.createStatement();
+//			ResultSet rs = state.executeQuery("SELECT *  FROM `User` "
+//					+ "WHERE `Id`= '1' ;");
 			ResultSet rs = state.executeQuery("SELECT *  FROM `User` "
-					+ "WHERE `Id`= '1' ;");
+					+ "WHERE `Id`=" + userId + ";");
 
 			if (rs.next()) {
 				// Ergebnis-Tupel in Objekt umwandeln
@@ -113,7 +113,7 @@ public class UserMapper {
 		return null;
 	}
 
-	public ArrayList<User> getAllUsers() {
+	public ArrayList<User> loadAllUsers() {
 		Connection con = DatebaseConnection.connection();
 		ArrayList<User> resultList = new ArrayList<>();
 
@@ -125,7 +125,7 @@ public class UserMapper {
 				User u = new User(); // Create new person-object to fill
 										// with values from database
 				u.setId(result.getInt("id"));
-				u.setNickName(result.getString("Nickname"));
+				u.setNickName(result.getString("nickname"));
 
 				resultList.add(u); // Add person-object to Arraylist
 			}
@@ -138,14 +138,15 @@ public class UserMapper {
 	}
 
 	public User getUserIdByUserNickname(String selectedNickname) {
-		Connection con = DatebaseConnection.connection();
+
+		Connection con = DatebaseConnection.connection();	
+
 		User u = new User();
+
 		try {
 
 			Statement state = con.createStatement();
-			ResultSet rs = state
-					.executeQuery("SELECT * FROM User WHERE Nickname='"
-							+ selectedNickname + "'");
+			ResultSet rs = state.executeQuery("SELECT * FROM User WHERE Nickname='" + selectedNickname + "'");
 
 			while (rs.next()) {
 
@@ -159,8 +160,8 @@ public class UserMapper {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-
 		}
+
 		return u;
 	}
 

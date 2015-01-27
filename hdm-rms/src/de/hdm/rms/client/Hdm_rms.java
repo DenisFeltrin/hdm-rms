@@ -7,7 +7,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
-import de.hdm.rms.client.EditorCrudPanel.createUser;
+import de.hdm.rms.client.EditorCrudPanel.CreateUser;
 
 class Hdm_rms implements EntryPoint, ClickHandler   {
 	
@@ -18,7 +18,7 @@ class Hdm_rms implements EntryPoint, ClickHandler   {
 	Button raumreservierung_btn = new Button( );
 	Button einstellungen_btn = new Button( );
 	
-	private createUser createUserObj;
+	private CreateUser createUserObj;
 	    
 	public Hdm_rms() {
  		menuPanel.add(startBtn);
@@ -78,11 +78,12 @@ class Hdm_rms implements EntryPoint, ClickHandler   {
 			RootPanel.get("content_wrap").add( new TestClassTableWIdget());
 
 		//	RootPanel.get("content_wrap").add( new EditorPanel().new createUser());
+		//	RootPanel.get("content_wrap").add( new EditorPanel().new EditUser());
 			
 		}else if (sender == einstellungen_btn) {
 			RootPanel.get("content_wrap").clear();
 			RootPanel.get("content_wrap").add(new EditorCrudPanel().new EditRoom());
-			RootPanel.get("content_wrap").add(new EditorCrudPanel().new createRoom());
+			RootPanel.get("content_wrap").add(new EditorCrudPanel().new CreateRoom());
 			RootPanel.get("content_wrap").add(new EditorCrudPanel().new EditUser());
 
 			    }

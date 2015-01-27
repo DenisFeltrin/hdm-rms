@@ -15,22 +15,22 @@ public class ClientSettings {
 	  public static ReservationServiceAsync getReservationService() {
 		    // Gab es bislang noch keine BankAdministration-Instanz, dann...
 		    if (reservationService == null) {
-		      // Zunächst instantiieren wir BankAdministration
+		      // ZunÃ¤chst instantiieren wir BankAdministration
 		    	reservationService = GWT.create(ReservationService.class);
 		    }
 
-		    // So, nun brauchen wir die BankAdministration nur noch zurückzugeben.
+		    // So, nun brauchen wir die BankAdministration nur noch zurÃ¼ckzugeben.
 		    return reservationService;
 		  }
 
 	public static ReportServiceAsync getReportService() {
 	    // Gab es bislang noch keine BankAdministration-Instanz, dann...
 	    if (reportService == null) {
-	      // Zunächst instantiieren wir BankAdministration
+	      // ZunÃ¤chst instantiieren wir BankAdministration
 	    	reportService = GWT.create(ReportService.class);
 	    }
 
-	    // So, nun brauchen wir die BankAdministration nur noch zurückzugeben.
+	    // So, nun brauchen wir die BankAdministration nur noch zurÃ¼ckzugeben.
 	    return reportService;
 	}
 	

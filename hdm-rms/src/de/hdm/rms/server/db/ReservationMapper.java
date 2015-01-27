@@ -5,8 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdm.rms.shared.bo.Reservation;
+import de.hdm.rms.shared.bo.ReservationListObj;
 import de.hdm.rms.shared.bo.Room;
 import de.hdm.rms.shared.bo.User;
 
@@ -17,7 +19,7 @@ public class ReservationMapper {
 	protected ReservationMapper() {
 	}
 
-	public static ReservationMapper reservationMapperv() {
+	public static ReservationMapper reservationMapper() {
 
 		if (reservationMapper == null) {
 			reservationMapper = new ReservationMapper();
@@ -26,8 +28,9 @@ public class ReservationMapper {
 		return reservationMapper;
 	}
 
-	public void insertReservation(Reservation re) {
+	public  void insertReservation(Reservation re) {
 		Connection con = DatebaseConnection.connection();
+		int resID = 0;
 		try {
 			Statement state = con.createStatement();
 			String sqlquery = "INSERT INTO Reservation (HostId, Topic, RoomId, Length, StartTime) VALUES ("
@@ -47,6 +50,41 @@ public class ReservationMapper {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+ 		
+	}
+	
+	public int selectReservationId(Reservation re) {
+		Connection con = DatebaseConnection.connection();
+		int resID = 0;
+		try {
+	 
+			 
+			
+			Statement state = con.createStatement();
+
+			ResultSet result = state.executeQuery("SELECT FROM Reservation (HostId, RoomId, StartTime) VALUES ("
+					+ "'"
+					+ re.getHostId()
+					+ "','"
+					+ re.getRoomId()
+					+ "','"
+					+ re.getStartTime()
+					+ "') ;");
+			while (result.next() ) {
+ 
+				resID=result.getInt("Id");
+
+				return resID;
+			}
+
+			 
+ 			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return resID;
+		
 	}
 	
 	public void deleteReservationById(int reservationId) {
@@ -58,7 +96,7 @@ public class ReservationMapper {
 			
 		     Statement stmt = con.createStatement();
 
-		      stmt.executeUpdate("DELETE FROM Reservation " + "WHERE id=" + 3 +";");	
+		      stmt.executeUpdate("DELETE FROM Reservation " + "WHERE Id=" + 3 +";");	
  
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -84,31 +122,32 @@ public class ReservationMapper {
 		return null;
 	}
 
-	public ArrayList<Reservation> loadReservationsByID(int temp_user_id) {
-		// TODO Auto-generated method stub
-		
-		
+	public ArrayList<Reservation> loadReservationsByUserId(int temp_user_id) {
+ 		
 		Connection con = DatebaseConnection.connection();
 
-			 
 			ArrayList<Reservation> resultList = new ArrayList<>();
 
 			try {
 				Statement state = con.createStatement();
-				ResultSet result = state.executeQuery("SELECT * FROM Reservatio " + "WHERE Id=" + temp_user_id +";");
-
+				//ResultSet result = state.executeQuery("SELECT * FROM Reservation " + "WHERE Id=" + temp_user_id +";");
+				ResultSet result = state.executeQuery("SELECT * FROM `Reservation` WHERE `HostId`=" + temp_user_id + " AND `StartTime` >=" + "'2010-01-24 15:11:39'" + " AND `EndTime` <=" + "'2030-01-24 17:11:39'" + ";");
+				//ResultSet result = state.executeQuery("SELECT * FROM `Reservation` WHERE `HostId`=" + temp_room_id + " AND `StartTime` >=" + "'2015-01-24 15:11:39'" + " AND `EndTime` <=" + "'2015-01-24 17:11:39'" + ";");
+				//("SELECT * FROM `Reservation` WHERE `HostId`=" + temp_user_id + "AND `EndTime` >=" + EndTime + "AND `StartTime` <=" + StartTime + ";");
+				
 				while (result.next() ) {
+				 
 					Reservation r = new Reservation(); 
-											
 					r.setId(result.getInt("Id"));
+					r.setHostId(result.getInt("HostId"));
 					r.setRoomId(result.getInt("RoomId"));
-					r.setLength(result.getInt("Lenght"));
-					r.setStartTime(result.getInt("StartTime"));
+					//r.setLength(result.getInt("Lenght"));
+					r.setStartTime(result.getDate("StartTime"));
+					r.setEndTime(result.getDate("EndTime"));
 					r.setTopic(result.getString("Topic"));
-
 					
 					resultList.add(r); // Add person-object to Arraylist
-				}
+				 }
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -116,6 +155,104 @@ public class ReservationMapper {
 
 			return resultList;
 		}
+
+	public ArrayList<Reservation> loadAllReservations() {
+		Connection con = DatebaseConnection.connection();
+
+		ArrayList<Reservation> resultList = new ArrayList<>();
+		try {
+			Statement state = con.createStatement();
+			//ResultSet result = state.executeQuery("SELECT * FROM Reservation " + "WHERE Id=" + temp_user_id +";");
+			ResultSet result = state.executeQuery("SELECT * FROM Reservation  ;");
+			while (result.next() ) {
+			 
+				Reservation r = new Reservation(); 
+				r.setId(result.getInt("Id"));
+				r.setRoomId(result.getInt("RoomId"));
+				r.setLength(result.getInt("Length"));
+				//r.setStartTime(result.getInt("StartTime"));
+				r.setTopic(result.getString("Topic"));
+				
+//
+				resultList.add(r); // Add person-object to Arraylist
+			 }
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return resultList;
+	}
+
+	public ArrayList<ReservationListObj> loadAllReservationsAsList() {
+		Connection con = DatebaseConnection.connection();
+
+		ArrayList<ReservationListObj> resultList = new ArrayList<>();
+		try {
+			Statement state = con.createStatement();
+ 
+			ResultSet result = state.executeQuery("SELECT  Reservation.Id, Reservation.CreationDate,   Length, StartTime, Topic, RoomId, Room.Name, Capacity, EMail, Firstname, Lastname, Nickname FROM Reservation INNER JOIN Room ON Reservation.RoomId = Room.Id  Inner Join User On Reservation.HostId = User.Id;");
+			while (result.next() ) {
+			 
+				ReservationListObj r = new ReservationListObj(); 
+				r.setId(result.getInt("Id"));
+				r.setRoomId(result.getInt("RoomId"));
+				r.setLength(result.getInt("Length"));
+				//r.setStartTime(result.getInt("StartTime"));
+				r.setTopic(result.getString("Topic"));
+				
+			//	r.setCapacity(result.getInt("Capacity"));
+
+ 				r.setFirstname(result.getString("Firstname"));
+				r.setLastname(result.getString("Lastname"));
+				r.setEMail(result.getString("EMail"));
+				r.setNickname(result.getString("Nickname"));
+
+				resultList.add(r); // Add person-object to Arraylist
+			 }
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return resultList;
+	}
+
+	public ArrayList<Reservation> loadReservationsByRoomId(int temp_room_id) {
+ 		
+		Connection con = DatebaseConnection.connection();
+
+			ArrayList<Reservation> resultList = new ArrayList<>();
+
+			try {
+				Statement state = con.createStatement();
+
+				//Korrektes SQL Querry ohne Datum
+				//ResultSet result = state.executeQuery("SELECT * FROM `Reservation` WHERE `RoomId`=" + temp_room_id + ";");
+				
+				//ResultSet result = state.executeQuery("SELECT * FROM `Reservation` WHERE `HostId`=" + temp_room_id + "AND `StartTime` >=" + fromDate + "AND `EndTime` <=" + toDate + ";");
+				ResultSet result = state.executeQuery("SELECT * FROM `Reservation` WHERE `HostId`=" + temp_room_id + " AND `StartTime` >=" + "'2015-01-24 15:11:39'" + " AND `EndTime` <=" + "'2015-01-24 17:11:39'" + ";");
+				
+				while (result.next() ) {
+				 
+					Reservation r = new Reservation(); 
+					r.setId(result.getInt("Id"));
+					r.setHostId(result.getInt("HostId"));
+					r.setRoomId(result.getInt("RoomId"));
+					//r.setLength(result.getInt("Lenght"));
+					r.setStartTime(result.getDate("StartTime"));
+					r.setEndTime(result.getDate("EndTime"));
+					r.setTopic(result.getString("Topic"));
+					
+					resultList.add(r); // Add person-object to Arraylist
+				 }
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			return resultList;
+	}
 		
 	 
 

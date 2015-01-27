@@ -1,7 +1,7 @@
 package de.hdm.rms.client;
 
+import java.sql.Date;
 import java.util.ArrayList;
-
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -13,10 +13,8 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DatePicker;
-
 import de.hdm.rms.shared.ReportServiceAsync;
 import de.hdm.rms.shared.ReservationServiceAsync;
 import de.hdm.rms.shared.bo.Room;
@@ -28,265 +26,275 @@ public class ReportPanel extends VerticalPanel {
 
 	public class createReportOne extends Showcase {
 
-		private ReportServiceAsync reportAdministration = ClientSettings
-				.getReportService();
-		private final VerticalPanel CreateReportOnePanel1 = new VerticalPanel();
-		private final VerticalPanel CreateReportOnePanel2 = new VerticalPanel();
-		private final VerticalPanel CreateReportOnePanel3 = new VerticalPanel();
-		private final Button createReportOneBtn = new Button(
-				"Report 1 erstellen");
-		private final Label HeadlineReportOne = new Label("Report1");
-		private final TextBox Attribut2 = new TextBox();
-		final ListBox ListOfRooms = new ListBox();
-		private String selectedNickname2;
-		private HorizontalPanel HorizontalPanelReportOne = new HorizontalPanel();
+			private ReportServiceAsync reportAdministration = ClientSettings.getReportService();
 
-		private DatePicker DatePickerFromReportOne = new DatePicker();
-		private DatePicker DatePickerToReportOne = new DatePicker();
-		private final Label DateLabelFromReportOne = new Label("Von");
-		private final Label DateLabelTwoReportOne = new Label("Bis");
+			private final VerticalPanel PanelReportOne = new VerticalPanel();
+			private final HorizontalPanel InteractionPanel = new HorizontalPanel();
+			private final VerticalPanel CreateReportOnePanel1 = new VerticalPanel();
+			private final VerticalPanel CreateReportOnePanel2 = new VerticalPanel();
+			private final VerticalPanel CreateReportOnePanel3 = new VerticalPanel();
+			
+			private final Button createReportOneBtn = new Button("Übersicht erstellen");
 
-		private final Label Attribut1Label = new Label(
-				"Raum für den Report auswählen:");
-		private final Label Attribut2Label = new Label("Zeitraum auswählen:");
+			private final Label HeadlineLabel = new Label("Report 1");
+			private final Label DescriptionLabel = new Label("Dieser Report bietet Ihnen eine Übersicht über alle Raumbuchungen innerhalb eines Raumes im gewünschten Zeitraum. Um eine Übersicht zu generieren, wählen Sie zuerst einen Raum aus dem Dropdown und definieren anschließend den Start- bzw. Endzeitpunkt der Übersicht. Auf Grundlage dieser Informationen wird mit einem Klick auf Übersicht erstellen im nächsten Schritt eine Tabellenübersicht erstellt.");
+			private final Label DateLabelFromReportOne = new Label("Zeitraum von:");
+			private final Label DateLabelTwoReportOne = new Label("Zeitraum bis:");
+			private final Label RoomLabel = new Label("Raum auswählen:");
+			
+			final ListBox ListOfRooms = new ListBox();
+			private String selectedNickname2;
+			private int selectedRoomName; 
 
-		@Override
-		public String getHeadline() {
-			return null;
-		}
+			private DatePicker DatePickerFromReportOne = new DatePicker();
+			private DatePicker DatePickerToReportOne = new DatePicker();
 
-		public String getSelectedListBoxIndex(ListBox listOfNicknames,
-				int selectedIndex) {
-			String selectedNickname = listOfNicknames
-					.getItemText(selectedIndex);
+			@Override
+			public String getHeadline() {
+				return null;
+			}
 
-			String s1 = "Eigene Pinnwand";
-			// Window.alert(" " + selectedNickname);
+			public int getSelectedListBoxIndex(ListBox listOfRooms,int selectedIndex) {
 
-			return selectedNickname;
+				String selectedRoom = listOfRooms.getItemText(selectedIndex);
+				 
+				//Window.alert(""+selectedNickname + selectedIndex);
+				reportAdministration.getOneRoomIdByName(selectedRoom,new AsyncCallback<Room>() {
 
-		}
+																@Override
+																public void onSuccess(Room result) {
+																	selectedRoomName = result.getId();
+ 																}
 
-		void loadRooms() {
-			// Dropdown aller vorhandenen User anzeigen
+																@Override
+																public void onFailure(Throwable caught) {
+																	Window.alert("Es ist ein Fehler aufgetreten.");
+																}
 
-			// ListOfNicknames.addItem("Eigene Pinnwand:" );
-			ListOfRooms.setSize("180px", "35px");
-			ListOfRooms.addStyleName("mainmenu-dropdown");
+															});
+				
+				return selectedRoomName;
 
-			// Dropdown dem RootPanel zuordnen
-			// RootPanel.get("content_wrap").add(ListOfNicknames);
+			}
 
-			reportAdministration
-					.getAllRooms(new AsyncCallback<ArrayList<Room>>() {
+			void loadRooms() {
 
-						public void onSuccess(ArrayList<Room> result) {
+				ListOfRooms.setSize("180px", "35px");
+				ListOfRooms.addStyleName("mainmenu-dropdown");
+				
+				reportAdministration.getAllRooms(new AsyncCallback<ArrayList<Room>>() {
+					
+					@Override
+					public void onSuccess(ArrayList<Room> result) {
 
-							for (int i = 0; i < result.size(); i++) {
+						for (int i = 0; i < result.size(); i++) {
 
-								ListOfRooms.addItem(result.get(i).getName());
-
-							}
-
-							ListOfRooms.addChangeHandler(new ChangeHandler() {
-
-								public void onChange(ChangeEvent event) {
-
-									selectedNickname2 = getSelectedListBoxIndex(
-											ListOfRooms,
-											ListOfRooms.getSelectedIndex());
-									// ShowUserFromSelectedItem(ListOfNicknames,
-									// ListOfNicknames.getSelectedIndex());
-
-								}
-
-								public void ShowRoomFromSelectedItem(
-										ListBox ListOfRooms, int selectedIndex) {
-									// TODO Auto-generated method stub
-
-									String selectedRoom = ListOfRooms
-											.getItemText(selectedIndex);
-
-									reportAdministration.getOneRoomIdByName(
-											selectedRoom,
-											new AsyncCallback<Room>() {
-
-												@Override
-												public void onSuccess(
-														Room result) {
-
-												}
-
-												@Override
-												public void onFailure(
-														Throwable caught) {
-													Window.alert("asdasd");
-												}
-
-											});
-
-								}
-
-							});
+							ListOfRooms.addItem(result.get(i).getName());
 
 						}
 
-						@Override
-						public void onFailure(Throwable caught) {
+					}
 
-							Window.alert("Konnte keine Räume finden");
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert("Konnte keine Räume finden");
+					}
+
+				});
+
+			}
+
+			@Override
+			public void run() {
+
+				InteractionPanel.getElement().setAttribute("cellpadding", "5");
+				InteractionPanel.addStyleName("ReportPanel");
+				createReportOneBtn.addStyleName("ReportBtn");
+				HeadlineLabel.addStyleName("headline");
+				DescriptionLabel.addStyleName("description");
+
+				createReportOneBtn.addClickHandler(new ClickHandler() {
+
+					public void onClick(ClickEvent event) {
+
+						java.util.Date fromDate = DatePickerFromReportOne.getValue();
+						java.util.Date toDate = DatePickerToReportOne.getValue();
+						int index = ListOfRooms.getSelectedIndex();
+						String selectedNickname = ListOfRooms.getValue(index);
+						int selectedRoomId = getSelectedListBoxIndex(ListOfRooms, ListOfRooms.getSelectedIndex());
+						
+						HTMLReportWriter ReportOneToHTML = new HTMLReportWriter();
+						ReportOneToHTML.getHeaderOfReportOne(selectedNickname, selectedRoomId, fromDate, toDate);
+
+					}
+
+				});
+
+			}
+
+			public createReportOne() {
+
+				loadRooms();
+
+				RootPanel.get("content_wrap").clear();
+				
+				CreateReportOnePanel1.add(RoomLabel);
+				CreateReportOnePanel1.add(ListOfRooms);
+				CreateReportOnePanel2.add(DateLabelFromReportOne);
+				CreateReportOnePanel2.add(DatePickerFromReportOne);
+				CreateReportOnePanel3.add(DateLabelTwoReportOne);
+				CreateReportOnePanel3.add(DatePickerToReportOne);
+
+				InteractionPanel.add(CreateReportOnePanel1);
+				InteractionPanel.add(CreateReportOnePanel2);
+				InteractionPanel.add(CreateReportOnePanel3);
+				InteractionPanel.add(createReportOneBtn);
+
+				PanelReportOne.add(HeadlineLabel);
+				PanelReportOne.add(DescriptionLabel);
+				PanelReportOne.add(InteractionPanel);
+
+				RootPanel.get("content_wrap").add(PanelReportOne);
+
+			}
+
+		}
+
+		public class createReportTwo extends Showcase {
+
+			private ReportServiceAsync reportAdministration = ClientSettings.getReportService();
+
+			private final VerticalPanel PanelReportTwo = new VerticalPanel();
+			private final HorizontalPanel InteractionPanel = new HorizontalPanel();
+			private final VerticalPanel CreateReportTwoPanel1 = new VerticalPanel();
+			private final VerticalPanel CreateReportTwoPanel2 = new VerticalPanel();
+			private final VerticalPanel CreateReportTwoPanel3 = new VerticalPanel();
+
+			private final Button createReportTwoBtn = new Button("Übersicht erstellen");
+
+			private final Label HeadlineLabel = new Label("Report 2");
+			private final Label DescriptionLabel = new Label("Dieser Report bietet Ihnen eine Übersicht über alle Raumbuchungen eines Nutzers im gewünschten Zeitraum. Um eine Übersicht zu generieren, wählen Sie zuerst einen Nutzer aus dem Dropdown und definieren anschließend den Start- bzw. Endzeitpunkt der Übersicht. Auf Grundlage dieser Informationen wird mit einem Klick auf Übersicht erstellen im nächsten Schritt eine Tabellenübersicht erstellt.");
+
+			final ListBox ListOfNicknames = new ListBox();
+			private String selectedNickname2;
+			private int selectedUserID; 
+			
+			private DatePicker DatePickerFromReportTwo = new DatePicker();
+			private DatePicker DatePickerToReportTwo = new DatePicker();
+
+			private final Label UserLabel = new Label("Nutzer auswählen:");
+			private final Label DateLabelFromReportTwo = new Label("Von");
+			private final Label DateLabelTwoReportTwo = new Label("Bis");
+
+			private Report r;
+
+			@Override
+			public String getHeadline() {
+				return null;
+			}
+
+			public int getSelectedListBoxIndex(ListBox listOfNicknames,int selectedIndex) {
+
+				String selectedNickname = listOfNicknames.getItemText(selectedIndex);
+				 
+				//Window.alert(""+selectedNickname + selectedIndex);
+				reportAdministration.getOneUserIdByNickname(selectedNickname,new AsyncCallback<User>() {
+
+																@Override
+																public void onSuccess(User result) {
+																	selectedUserID = result.getId();
+ 																}
+
+																@Override
+																public void onFailure(Throwable caught) {
+																	Window.alert("Es ist ein Fehler aufgetreten.");
+																}
+
+															});
+				
+				return selectedUserID;
+
+			}
+
+			void loadUsers() {
+
+				ListOfNicknames.setSize("180px", "35px");
+				ListOfNicknames.addStyleName("mainmenu-dropdown");
+				
+				reportAdministration.getAllUsers(new AsyncCallback<ArrayList<User>>() {
+					
+					@Override
+					public void onSuccess(ArrayList<User> result) {
+
+						for (int i = 0; i < result.size(); i++) {
+
+							ListOfNicknames.addItem(result.get(i).getNickName());
 
 						}
-					});
 
+					}
+
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert("Konnte keine User finden");
+					}
+
+				});
+
+			}
+
+			@Override
+			public void run() {
+
+				InteractionPanel.getElement().setAttribute("cellpadding", "5");
+				InteractionPanel.addStyleName("ReportPanel");
+				createReportTwoBtn.addStyleName("ReportBtn");
+				HeadlineLabel.addStyleName("headline");
+				DescriptionLabel.addStyleName("description");
+
+				createReportTwoBtn.addClickHandler(new ClickHandler() {
+
+					public void onClick(ClickEvent event) {
+
+						int index = ListOfNicknames.getSelectedIndex();
+						String selectedNickname = ListOfNicknames.getValue(index);
+						int selectedUserID = getSelectedListBoxIndex(ListOfNicknames, ListOfNicknames.getSelectedIndex());
+						
+						HTMLReportWriter ReportTwoToHTML = new HTMLReportWriter();
+						ReportTwoToHTML.getHeaderOfReportTwo(selectedNickname, selectedUserID);
+
+					}
+
+				});
+
+			}
+
+			public createReportTwo() {
+
+				loadUsers();
+
+				//RootPanel.get("content_wrap").clear();
+				
+				CreateReportTwoPanel1.add(UserLabel);
+				CreateReportTwoPanel1.add(ListOfNicknames);
+				CreateReportTwoPanel2.add(DateLabelFromReportTwo);
+				CreateReportTwoPanel2.add(DatePickerFromReportTwo);
+				CreateReportTwoPanel3.add(DateLabelTwoReportTwo);
+				CreateReportTwoPanel3.add(DatePickerToReportTwo);
+
+				InteractionPanel.add(CreateReportTwoPanel1);
+				InteractionPanel.add(CreateReportTwoPanel2);
+				InteractionPanel.add(CreateReportTwoPanel3);
+				InteractionPanel.add(createReportTwoBtn);
+
+				PanelReportTwo.add(HeadlineLabel);
+				PanelReportTwo.add(DescriptionLabel);
+				PanelReportTwo.add(InteractionPanel);
+
+				RootPanel.get("content_wrap").add(PanelReportTwo);
+
+			}
+			
 		}
-
-		@Override
-		public void run() {
-			// bankVerwaltung.getCustomerById(11, new
-			// DeleteCustomerCallback(this));
-			// Methode die aufgerufen wird bei Clickhandler
-			createReportOneBtn.addClickHandler(new ClickHandler() {
-				public void onClick(ClickEvent event) {
-
-					Window.alert("Report 1 wurde erstellt.");
-					// Window.open("http://www.google.com/", "_blank", "");
-
-				}
-			});
-		}
-
-		public createReportOne() {
-
-			loadRooms();
-			RootPanel.get("content_wrap").clear();
-			CreateReportOnePanel1.add(Attribut1Label);
-			CreateReportOnePanel1.add(ListOfRooms);
-			CreateReportOnePanel2.add(DateLabelFromReportOne);
-			CreateReportOnePanel2.add(DatePickerFromReportOne);
-			CreateReportOnePanel3.add(DateLabelTwoReportOne);
-			CreateReportOnePanel3.add(DatePickerToReportOne);
-			HorizontalPanelReportOne.add(HeadlineReportOne);
-			HorizontalPanelReportOne.add(CreateReportOnePanel1);
-			HorizontalPanelReportOne.add(CreateReportOnePanel2);
-			HorizontalPanelReportOne.add(CreateReportOnePanel3);
-			HorizontalPanelReportOne.add(createReportOneBtn);
-			RootPanel.get("content_wrap").add(HorizontalPanelReportOne);
-
-		}
-
-	}
-
-	public class createReportTwo extends Showcase {
-
-		private ReportServiceAsync reportAdministration = ClientSettings
-				.getReportService();
-
-		private final HorizontalPanel HorizontalPanelReportTwo = new HorizontalPanel();
-		private ReservationServiceAsync reservationAdministration = ClientSettings
-				.getReservationService();
-		private final Button createReportTwoBtn = new Button(
-				"Report 2 erstellen");
-		private final Label HeadlineReportTwo = new Label("Report2");
-		private final TextBox Attribut4 = new TextBox();
-		final ListBox ListOfNicknames = new ListBox();
-		private String selectedNickname2;
-		private DatePicker DatePickerFromReportTwo = new DatePicker();
-		private DatePicker DatePickerToReportTwo = new DatePicker();
-		private final Label DateLabelFromReportTwo = new Label("Von");
-		private final Label DateLabelTwoReportTwo = new Label("Bis");
-		private final VerticalPanel CreateReportTwoPanel1 = new VerticalPanel();
-		private final VerticalPanel CreateReportTwoPanel2 = new VerticalPanel();
-		private final VerticalPanel CreateReportTwoPanel3 = new VerticalPanel();
-		private Report r;
-
-		private final Label Attribut3Label = new Label(
-				"Nutzer für den Report auswählen:");
-		private final Label Attribut4Label = new Label("Zeitraum auswählen:");
-
-		@Override
-		public String getHeadline() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		public String getSelectedListBoxIndex(ListBox listOfNicknames,
-				int selectedIndex) {
-			String selectedNickname = listOfNicknames
-					.getItemText(selectedIndex);
-
-			String s1 = "Eigene Pinnwand";
-			// Window.alert(" " + selectedNickname);
-
-			return selectedNickname;
-
-		}
-
-		void loadUsers() {
-			// Dropdown aller vorhandenen User anzeigen
-
-			// ListOfNicknames.addItem("Eigene Pinnwand:" );
-			ListOfNicknames.setSize("180px", "35px");
-			ListOfNicknames.addStyleName("mainmenu-dropdown");
-
-			reportAdministration
-					.getAllUsers(new AsyncCallback<ArrayList<User>>() {
-
-						@Override
-						public void onSuccess(ArrayList<User> result) {
-
-							for (int i = 0; i < result.size(); i++) {
-
-								ListOfNicknames.addItem(result.get(i)
-										.getNickName());
-
-							}
-
-						}
-
-						@Override
-						public void onFailure(Throwable caught) {
-
-							Window.alert("Konnte keine User finden");
-
-						}
-					});
-
-		}
-
-		@Override
-		public void run() {
-
-			createReportTwoBtn.addClickHandler(new ClickHandler() {
-				public void onClick(ClickEvent event) {
-					int index = ListOfNicknames.getSelectedIndex();
-					String selectedNickname = ListOfNicknames.getValue(index);
-					HTMLReportWriter ReportTwoToHTML = new HTMLReportWriter();
-					ReportTwoToHTML.getHeaderOfReportTwo(selectedNickname);
-					Window.alert("Report 2 wurde erstellt.");
-
-				}
-			});
-
-		}
-
-		public createReportTwo() {
-			loadUsers();
-			CreateReportTwoPanel1.add(Attribut3Label);
-			CreateReportTwoPanel1.add(ListOfNicknames);
-			CreateReportTwoPanel2.add(DateLabelFromReportTwo);
-			CreateReportTwoPanel2.add(DatePickerFromReportTwo);
-			CreateReportTwoPanel3.add(DateLabelTwoReportTwo);
-			CreateReportTwoPanel3.add(DatePickerToReportTwo);
-			HorizontalPanelReportTwo.add(HeadlineReportTwo);
-			HorizontalPanelReportTwo.add(CreateReportTwoPanel1);
-			HorizontalPanelReportTwo.add(CreateReportTwoPanel2);
-			HorizontalPanelReportTwo.add(CreateReportTwoPanel3);
-			HorizontalPanelReportTwo.add(createReportTwoBtn);
-			RootPanel.get("content_wrap").add(HorizontalPanelReportTwo);
-
-		}
-
-	}
 
 }

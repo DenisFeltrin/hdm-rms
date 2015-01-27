@@ -2,14 +2,10 @@ package de.hdm.rms.client;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
-import de.hdm.rms.shared.bo.User;
 
 public class EditorManagementPanel extends Showcase {
 
@@ -28,7 +24,7 @@ public class EditorManagementPanel extends Showcase {
 	
 		@Override
 		public String getHeadline() {
-			// TODO Auto-generated method stub
+
 			return null;
 		}
 
@@ -78,4 +74,4 @@ public class EditorManagementPanel extends Showcase {
 			
 		}
 		
-	}
+}

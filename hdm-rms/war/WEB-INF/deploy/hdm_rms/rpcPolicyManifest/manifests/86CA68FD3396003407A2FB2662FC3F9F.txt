@@ -1,2 +1,0 @@
-serviceClass: de.hdm.rms.shared.ReportService
-path: 4488AB319130A3B9DF9E5EFF8635C602.gwt.rpc

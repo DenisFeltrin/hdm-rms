@@ -1,15 +1,37 @@
 package de.hdm.rms.shared.bo;
 
+import java.sql.Date;
+import java.sql.Time;
+
 public class Reservation extends BusinessObject {
 
 	private static final long serialVersionUID = 1L;
 	private String topic;
-	private int startTime;
+	
+	private Date startTime;
+	private Date endTime;
+
 	private int length;
 	private int hostId;
 	private int roomId;
 	private int Id;
+	
+	public Reservation(String topic, Date startTime, int length, int hostId, int roomId, int Id, Date endTime ){
+		
+		this.topic = topic;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.length = length;
+		this.hostId = hostId;
+		this.roomId = roomId; 
+		this.Id = Id; 
+	
+	}
 
+	public Reservation(  ){
+	
+	}
+	
 	public String getTopic() {
 		return topic;
 	}
@@ -18,12 +40,12 @@ public class Reservation extends BusinessObject {
 		this.topic = topic;
 	}
 
-	public int getStartTime() {
+	public Date getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(int startTime) {
-		this.startTime = startTime;
+	public void setStartTime(Date date) {
+		this.startTime = date;
 	}
 
 	public int getLength() {
@@ -56,6 +78,14 @@ public class Reservation extends BusinessObject {
 
 	public void setHostId(int hostId) {
 		this.hostId = hostId;
+	}
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
 	}
 
 }
