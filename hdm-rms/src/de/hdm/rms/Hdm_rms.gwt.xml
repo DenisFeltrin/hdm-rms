@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='hdm_rms'>
 <!--
   When updating your version of GWT, you should also update this DTD reference,
   so that your app can take advantage of the latest GWT module capabilities.
--->
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.6.0//EN"
-  "http://google-web-toolkit.googlecode.com/svn/tags/2.6.0/distro-source/core/src/gwt-module.dtd">
-<module rename-to='hdm_rms'>
+  "http://google-web-toolkit.googlecode.com/svn/tags/2.6.0/distro-source/core/src/gwt-module.dtd">-->
+
   <!-- Inherit the core Web Toolkit stuff.                        -->
+  
   <inherits name='com.google.gwt.user.User'/>
 
   <!-- Inherit the default GWT style sheet.  You can change       -->
@@ -17,6 +18,8 @@
   <!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
   <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
 
+  <inherits name="com.google.api.gwt.oauth2.OAuth2" />
+
   <!-- Other module inherits                                      -->
 
   <!-- Specify the app entry point class.                         -->
@@ -26,6 +29,4 @@
   <source path='client'/>
   <source path='shared'/>
 
-  <!-- allow Super Dev Mode -->
-  <add-linker name="xsiframe"/>
 </module>

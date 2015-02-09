@@ -1,14 +1,14 @@
 package de.hdm.rms.client;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
-
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
@@ -26,19 +26,17 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
 import com.google.gwt.view.client.ListDataProvider;
-
 import de.hdm.rms.shared.ReservationServiceAsync;
 import de.hdm.rms.shared.bo.Invitation;
 import de.hdm.rms.shared.bo.InvitationListObj;
 import de.hdm.rms.shared.bo.Reservation;
-import de.hdm.rms.shared.bo.ReservationListObj;
 import de.hdm.rms.shared.bo.Room;
 import de.hdm.rms.shared.bo.User;
 
 public class EditorCrudPanel extends VerticalPanel {
 	
-	  public class CreateUser extends Showcase  {
-		  
+	public class CreateUser extends Showcase  {
+		
 		    private ReservationServiceAsync reservationAdministration = ClientSettings.getReservationService();
 			private final VerticalPanel CreateUserPanel = new VerticalPanel();
 			private final Button userRegisterBtn = new Button("Nutzer anlegen");
@@ -61,7 +59,7 @@ public class EditorCrudPanel extends VerticalPanel {
 									|| lastName.getValue().isEmpty()
 									|| nickName.getValue().isEmpty()
 									|| email.getValue().isEmpty()) {
-								Window.alert("Bitte Felder ausf�llen");
+								Window.alert("Bitte Felder ausfüllen");
 							} else {
 								u = new User();
 								u.setFirstName(firstName.getValue());
@@ -334,7 +332,7 @@ public class EditorCrudPanel extends VerticalPanel {
 			private final Button roomEditBtn = new Button("Geänderte Raumdaten speichern.");
 			private final TextBox name = new TextBox();
 			private final TextBox capaticity = new TextBox();
-			final ListBox ListOfRooms = new ListBox();
+			private final ListBox ListOfRooms = new ListBox();
 			private String selectedNickname2;
 			private final Label headlineLabel = new Label("Raum bearbeiten:");
 			private final Label descriptionLabel = new Label(" Hier haben Sie die Möglichkeit, einen gewünschten Raum zu bearbeiten. Wählen Sie hierzu bitte den Raum im Dropdown aus. /n Anschließend können Sie die Raumeigenschaften anpassen. Zum Speichern der Änderungen, klicken Sie auf Geänderte Raumdaten speichern. /n/n");
@@ -373,7 +371,7 @@ public class EditorCrudPanel extends VerticalPanel {
 							EditRoomPanel.add(roomEditBtn);
 							EditRoomPanel.add(roomDeleteBtn);
 							
-							  RootPanel.get("content_wrap").add(EditRoomPanel);
+							RootPanel.get("content_wrap").add(EditRoomPanel);
 
 						}
 
@@ -438,7 +436,7 @@ public class EditorCrudPanel extends VerticalPanel {
 
 																@Override
 																public void onFailure(Throwable caught) {
-																	Window.alert("asdasd");
+																	Window.alert("Der Raum konnte nicht ausgewählt werden.");
 																}
 
 															});
@@ -501,27 +499,25 @@ public class EditorCrudPanel extends VerticalPanel {
 								Room r = new Room();
 								name.getText();
 								capaticity.getText();
-								 updateRoom(r);
+								updateRoom(r);
 						
 							}
 						 
-					}
+						}	
 					});
 				  
 				  
 				  roomDeleteBtn.addClickHandler(new ClickHandler() {
 						public void onClick(ClickEvent event) {
-					 deleteRoom(3);
+							deleteRoom(roomId);
 							 
-					}
-					});
+						}	
+				  });
 				  
 			  }
 			
 			  public EditRoom() {
-					 
 				  loadRoomData(roomId);
-				   
 				}
 
 			@Override
@@ -536,21 +532,23 @@ public class EditorCrudPanel extends VerticalPanel {
 		  	private final VerticalPanel CreateInvitationPanel = new VerticalPanel();
 			private final Button sendInvitationBtn = new Button("Einladung verschicken");
 			private final TextBox nickName = new TextBox();
-			private final TextBox AcceptionStatus = new TextBox();
+			private final TextBox acceptionStatus = new TextBox();
 			private final Label nickNameLabel = new Label("Nickname");
-			private int  memberId = 2;
-			private String  accst = "2";
+			private int memberId = 2;
+			private String accst = "2";
 			private Invitation i;
 			
 		    private ReservationServiceAsync reservationAdministration = ClientSettings.getReservationService();
 
 			public CreateInvitation() {
+				
 				RootPanel.get("content_wrap").clear();
-				RootPanel.get("content_wrap").add(CreateInvitationPanel);
+				
 				CreateInvitationPanel.add(nickNameLabel);
 				CreateInvitationPanel.add(nickName);
-				 
 				CreateInvitationPanel.add(sendInvitationBtn);
+				
+				RootPanel.get("content_wrap").add(CreateInvitationPanel);
 			}
 			
 			public void run(){
@@ -562,7 +560,7 @@ public class EditorCrudPanel extends VerticalPanel {
 						} else {
 							i = new Invitation();
 							i.setMemberId(memberId);
-							i.setAcceptionStatus(Integer.parseInt(accst ) );
+							i.setAcceptionStatus(Integer.parseInt(accst));
 							 			
 						/*	reservationAdministration.insertInvitation(i, new AsyncCallback<Void>() {
 
@@ -598,10 +596,10 @@ public class EditorCrudPanel extends VerticalPanel {
 		  private final Button deleteInvitationBtn = new Button("Einladung verschicken");
 		  private final Button editInvitationBtn = new Button("Geänderte Einladungsdaten verschicken.");
 		  private final TextBox nickName = new TextBox();
-		  private final TextBox AcceptionStatus = new TextBox();
+		  private final TextBox acceptionStatus = new TextBox();
 		  private final Label nickNameLabel = new Label("Nickname");
-		  private int  memberId = 2;
-		  private String  accst = "2";
+		  private int memberId = 2;
+		  private String accst = "2";
 		  
 		  private Invitation i;
 			
@@ -636,11 +634,11 @@ public class EditorCrudPanel extends VerticalPanel {
 			
 	  }
 	  
-	  public class CreateReservation extends Showcase {
+public class CreateReservation extends Showcase {
 		 
 		  private ReservationServiceAsync reservationAdministration = ClientSettings.getReservationService();
+		  
 		  private final VerticalPanel CreateReservationPanel = new VerticalPanel();
-
 		  private final HorizontalPanel userPanel = new HorizontalPanel();
 		  private final VerticalPanel datePanelLeft = new VerticalPanel();
 		  private final VerticalPanel datePanelMiddle = new VerticalPanel();
@@ -648,120 +646,101 @@ public class EditorCrudPanel extends VerticalPanel {
 		  private final HorizontalPanel dateBoxPair1 = new HorizontalPanel();
 		  private final HorizontalPanel dateBoxPair2 = new HorizontalPanel();
 		  private final HorizontalPanel dateBarPanelWrap = new HorizontalPanel();
-
 		  private final VerticalPanel inviteTablePanel = new VerticalPanel();
 
-
-
 		  private final Label pointLabel = new Label(" : ");
-
 		  private final Button userAddBtn = new Button("Nutzer zur Teilnehmerliste hinzufügen");
 		  private final Button sendReservationBtn = new Button("Reservierung erstellen.");
  		  private final ListBox startTimeHour = new ListBox();
 		  private final ListBox startTimeMinutes = new ListBox();
-
 		  private ListBox   endTimeHour = new ListBox();
 		  private ListBox   endTimeMinutes = new ListBox();
 		  private Label memLabel = new Label("Neue Reservierung erstellen  " );
 		  private Label memLabelText = new Label(" Hier ist eine Übersicht über, die von Ihnen organisierten Veranstaltungen, dargestellt. Sie können jederzeit die Reservierung oder die Teilnehmerlisten einsehen und Änderungen vorhnemen. /n Bitte wählen Sie hierzu einfach die entsprechende Veranstaltung aus unf klicken Sie auf einen der unten eingeblendeten Button - Teilnehmerliste einstehen oder Reservierung bearbeiten./n/n");
-
 		  private final ListBox roomDropdown = new ListBox();
 		  private final ListBox nicknameDropdown = new ListBox();
 		  private final TextBox topicBox = new TextBox();
 		  private final Label startTimeLabel = new Label("Start [hh:mm]");
 		  private final Label endTimeLabel = new Label("Ende [hh:mm]");
-		    DateBox startDay = new DateBox();
+		  DateBox startDay = new DateBox();
 
 		  private final Label startDayLabel = new Label("Bitte den Tag auswählen");
 
 		  private   int  invitationTableCellCounter = 1;
 		  private int  row = 1;
-	    	private ArrayList <User> userInvitationArray = new ArrayList <User>();
-	    	private ArrayList <Room> selectedRoomArray = new ArrayList <Room>();
+		  private ArrayList <User> userInvitationArray = new ArrayList <User>();
+		  private ArrayList <Room> selectedRoomArray = new ArrayList <Room>();
 
-
-			private  final Invitation i = new Invitation();
-
+		  private  final Invitation i = new Invitation();
  		  private final Label roomLabel = new Label("Raum auswählen");
 		  private final Label nickNameLabel = new Label("Nutzer einladen");
 		  private final Label topicLabel = new Label("Veranstaltungsbeschreibung");
-		  
 		  private final FlexTable inviteUserTable = new FlexTable(); 
-		    private final Button removeStockButton = new Button("x");
+		  private final Button removeStockButton = new Button("x");
 
-		    String email;
-			String selectedNickname;
-
- 	 
-
- 		  
+		  String email;
+		  String selectedNickname;
+		  String dateTimeString;
+		  Date dateString;
+		  
+		  int addUserListSelectedindex;
+		  int year;
+		  int month;
+		  int day;
+		  
+		  final DateTimeFormat dateFormatDateBox2 = DateTimeFormat.getFormat("yyyy-MM-dd");
+		  DateTimeFormat dateFormatDateBox = DateTimeFormat.getFormat("dd.MM.yyyy");
+		  DateTimeFormat dateFormatServerFormat = DateTimeFormat.getFormat("yyyy-MM-dd hh:mm");
+ 
 		  public CreateReservation(){
 			  
 				inviteUserTable.setVisible(false);
-
-
-			  
-			  
 			  
 			  	//super.get("content_wrap").clear();
-			  DateTimeFormat dateFormat = DateTimeFormat.getLongDateFormat();
-			    startDay.setFormat(new DateBox.DefaultFormat(dateFormat));
+				/*
+			    DateTimeFormat dateFormat=DateTimeFormat.getFormat("dd.MM.yyyy");
+ 			    startDay.setFormat(new DateBox.DefaultFormat(dateFormat));
 			    startDay.getDatePicker().setYearArrowsVisible(true);
+			    Date a = startDay.getValue();
+			  */
+			    
 			    CreateReservationPanel.add(memLabel);
 			    CreateReservationPanel.add(memLabelText);
-			    
 				CreateReservationPanel.add(topicLabel);
 				CreateReservationPanel.add(topicBox);
-				
 				CreateReservationPanel.add(roomLabel);
 				CreateReservationPanel.add(roomDropdown);
-				
-				
 				datePanelLeft.add(startDayLabel);
 				datePanelLeft.add(startDay);
-				
 				datePanelMiddle.add(startTimeLabel);
 				dateBoxPair1.add(startTimeHour);
 				dateBoxPair1.add(pointLabel);
 				dateBoxPair1.add(startTimeMinutes);
 				datePanelMiddle.add(dateBoxPair1);
-
 				datePanelRight.add(endTimeLabel);
 				dateBoxPair2.add(endTimeHour);
 				dateBoxPair2.add(pointLabel);
 				dateBoxPair2.add(endTimeMinutes);
 				datePanelRight.add(dateBoxPair2);
-				
-				
 				dateBarPanelWrap.add(datePanelLeft);
 				dateBarPanelWrap.add(datePanelMiddle);
 				dateBarPanelWrap.add(datePanelRight);
 				CreateReservationPanel.add(dateBarPanelWrap);
-
-			 
 				CreateReservationPanel.add(nickNameLabel);
  				userPanel.add(nicknameDropdown);
 				userPanel.add(userAddBtn);
 				CreateReservationPanel.add(userPanel);
-
 				CreateReservationPanel.add(inviteTablePanel);
-				
-				
-					
 				CreateReservationPanel.add(sendReservationBtn);
 				super.add(CreateReservationPanel);
 
 		  }
-		  
-		  
-		  
+	  
 		  public void loadDateListBoxData(){
 			  startTimeMinutes.setSelectedIndex(0);
 			  endTimeMinutes.setSelectedIndex(0);
 			  startTimeHour.setSelectedIndex(0);
 			  endTimeHour.setSelectedIndex(0);
-
-			   
 			  
 			  for (int i = 1; i <= 60; i++) {
 				  startTimeMinutes.addItem(Integer.toString(i-1) );
@@ -772,23 +751,12 @@ public class EditorCrudPanel extends VerticalPanel {
 				  startTimeHour.addItem(Integer.toString(i-1));
 				  endTimeHour.addItem(Integer.toString(i-1));				  
 			  }
-			  
 		  }
-		  
-		  
-		  
-		  
-			
+		
 			public void loadAllRoomsIntoListBox(){
 				
 				final String selectedNickname2; 
-
-				//	ListOfNicknames.addItem("Eigene Pinnwand:" );
-				//nicknameDropdown.setSize("180px", "35px");
 				roomDropdown.addStyleName("mainmenu-dropdown");
-			 
-					// Dropdown dem RootPanel zuordnen
-//					RootPanel.get("content_wrap").add(ListOfNicknames);
 
 					reservationAdministration.getAllRooms(new AsyncCallback<ArrayList<Room>>() {
 						
@@ -798,47 +766,21 @@ public class EditorCrudPanel extends VerticalPanel {
 							selectedRoomArray = result; 
 							roomDropdown.addItem("---");
 							for (int i = 1; i < result.size(); i++) {
-
 								roomDropdown.addItem(result.get(i).getName() + "  [" + result.get(i).getCapaticity() + " " + "Plätze ]" + " "  + "  [ R-ID:" + result.get(i).getId() + "  ]");
-								//roomDropdown.addItem(result.get(i).getCapaticity());
-
-								
-								
-								
-
 							}
-							
-			 	
-							
 						}
 
 						@Override
 						public void onFailure(Throwable caught) {
-
 							Window.alert("Konnte keinen Raum finden");
-
 						}
 					});
-				
-				
-				
 			}
-			
-		  
-		  
-		  
-			
+	
 			public void loadAllUserIntoListBox(){
-				
 
 				final String selectedNickname2; 
-
-				//	ListOfNicknames.addItem("Eigene Pinnwand:" );
-				//nicknameDropdown.setSize("180px", "35px");
 				nicknameDropdown.addStyleName("mainmenu-dropdown");
-			 
-					// Dropdown dem RootPanel zuordnen
-//					RootPanel.get("content_wrap").add(ListOfNicknames);
 
 					reservationAdministration.getAllUsers(new AsyncCallback<ArrayList<User>>() {
 						
@@ -850,21 +792,16 @@ public class EditorCrudPanel extends VerticalPanel {
 								nicknameDropdown.addItem(result.get(i).getNickName());
 
 							}
-							
-							
-							
+			
 							nicknameDropdown.addChangeHandler(new ChangeHandler() {
 							 
 						 		public void onChange(ChangeEvent event) {
 								
 								//	selectedNickname2=	getSelectedListBoxIndex(ListOfNicknames, ListOfNicknames.getSelectedIndex());
 								//	ShowUserFromSelectedItem(ListOfNicknames, ListOfNicknames.getSelectedIndex());
-			 					
-									
+							
 								}
-								
-						 
-												
+											
 								});		
 							
 						}
@@ -876,34 +813,36 @@ public class EditorCrudPanel extends VerticalPanel {
 
 						}
 					});
-				
-				
-				
+			
 			}
-			
-			
-			
-		  
-		  
+	  
 		  public void run() {
 			  loadDateListBoxData();
 			  loadAllUserIntoListBox();
 			  loadAllRoomsIntoListBox();
 			  topicBox.setHeight("20px");
 			  topicBox.setWidth("700px");
-
 			  roomDropdown.setHeight("35px");
 			  roomDropdown.setWidth("700px");
-			  
-
 			  nicknameDropdown.setHeight("35px");
 			  nicknameDropdown.setWidth("450px");
 			  
+//			  startDay.addValueChangeHandler(new ValueChangeHandler<Date>() {
+//			        
+//				  @Override
+//			         public void onValueChange(ValueChangeEvent<Date> event) {
+//			            Date date = event.getValue();
+//			            startDay.setValue(date);
+//			            dateTimeString =  DateTimeFormat.getFormat("yyyy-MM-dd").format(date);
+//			         }
+//			      });
+			  
+			   startDay.setFormat(new DateBox.DefaultFormat(dateFormatDateBox));
+			   
+/*Clickhandler Reservierung absenden*/			  
+			  
 				sendReservationBtn.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
-						
-						
-					 
 
 						int index = roomDropdown.getSelectedIndex();
 						String selectedRoom = roomDropdown.getValue(index);
@@ -914,140 +853,107 @@ public class EditorCrudPanel extends VerticalPanel {
 								|| startTimeHour.getSelectedIndex() == 0
 								|| endTimeHour.getSelectedIndex() == 0
 								|| startTimeMinutes.getSelectedIndex() == 0
-								|| endTimeMinutes.getSelectedIndex() == 0){
-								//|| userInvitationArray.isEmpty()){
+								|| endTimeMinutes.getSelectedIndex() == 0
+								|| userInvitationArray.isEmpty()){ 
 								Window.alert("Bitte alle Felder ausfüllen.");
 						}
 						else {
 							
-							
-							
 							int startTimeHourTemp = startTimeHour.getSelectedIndex();
-							String selectValueHour = startTimeHour.getValue(startTimeHourTemp);
+							String selectStartValueHour = startTimeHour.getValue(startTimeHourTemp);
 						    
 						    int startTimeMinutesTemp = startTimeMinutes.getSelectedIndex();
-							String selectValueMinutes = startTimeMinutes.getValue(startTimeMinutesTemp);
+							String selectStartValueMinutes = startTimeMinutes.getValue(startTimeMinutesTemp);
 							
-							String completeStartString = selectValueHour+selectValueMinutes;
-							
-						    int intZahlMinutes = Integer.parseInt(selectValueMinutes);
-						    
-						    //Test
-						    int intZahlHour = 0;
-						    //Test Ende
-						    int startTimeComplete = intZahlHour + intZahlMinutes;
-							Window.alert(""+ selectValueHour + " " +startTimeComplete );
-
-						    
 							int endTimeHourTemp = endTimeHour.getSelectedIndex();
-							String selectValueHour2 = endTimeHour.getValue(endTimeHourTemp);
-						    int intZahlHour2 = Integer.parseInt(selectValueHour2);
+							String selectEndValueHour = endTimeHour.getValue(endTimeHourTemp);
 						    
-						    int endTimeMinutesTemp2 = endTimeMinutes.getSelectedIndex();
-							String selectValueMinutes2 = endTimeMinutes.getValue(endTimeMinutesTemp2);
-						    int intZahlMinutes2 = Integer.parseInt(selectValueMinutes2);
-						    
-						    int endTimeComplete = intZahlHour2 + intZahlMinutes2;
-
-						    
-						     						    
-						     
-
-								int hostidtemp = 2 ;  
+						    int endTimeMinutesTemp = endTimeMinutes.getSelectedIndex();
+							String selectEndMinutes = endTimeMinutes.getValue(endTimeMinutesTemp);
 							
-								Reservation r = new Reservation();
-//								r.setStartTime(startTimeComplete);
-//								r.setEndTime(endTimeComplete);
-								r.setTopic(topicBox.getText());
-								r.setHostId(hostidtemp);
- 								
-								int idTemp = selectedRoomArray.get(roomDropdown.getSelectedIndex()).getId() ;
-								r.setRoomId(idTemp);
+							startDay.setFormat(new DateBox.DefaultFormat(dateFormatDateBox2));
+						 
+						  //   Window.alert(dateTimeString +" " +selectStartValueHour+ ":"+selectStartValueMinutes+":00" );
+						   //  Window.alert(dateTimeString +" " +selectEndValueHour+ ":"+selectEndMinutes+":00" );
+				 
+						    String startString = dateTimeString +" " +selectStartValueHour+ ":"+selectStartValueMinutes+":00";
+						    String endString = dateTimeString +" " +selectEndValueHour+ ":"+selectEndMinutes+":00";
+						
+						    DateTimeFormat fmt = DateTimeFormat.getFormat("yyyy-MM-dd HH:mm:ss");
+							java.util.Date dateStartTime = fmt.parse(startString);
+							java.util.Date dateEndTime = fmt.parse(endString);
+						//	   Window.alert(fmt.format(dateTest));
 
-								
-								
-							//	i.setReservationId(reservationId);
- 
-								
-/*
-								re.setStartTime(Integer.parseInt(startTime.getValue()));
-								re.setLength(  Integer.parseInt(length.getValue()));
-	 							re.setHostId(Integer.parseInt(nicknameDropdown.getText()) );
-								re.setRoomId( Integer.parseInt(roomDropdown.getText()) );
-								re.setTopic(topicBox.getValue());
-*/
-								
-								
-								
-								
-								
-								
-								
-							reservationAdministration.insertReservation(r, new AsyncCallback<Integer>() {
+//							Date dateStringStart = DateTimeFormat.getFormat("yyyy-MM-dd HH:mm:ss").format(dateStartTime);
+//							Date dateStringEnd = DateTimeFormat.getFormat("yyyy-MM-dd HH:mm:ss").format(dateEndTime);
+//							   
+							int hostidtemp = 2 ;  
+							
+							Reservation r = new Reservation();
+//							r.setStartTime(dateStringStart);
+//							r.setEndTime(dateStringEnd);
+							r.setTopic(topicBox.getText());
+							r.setHostId(hostidtemp);
+ 								
+							int idTemp = selectedRoomArray.get(roomDropdown.getSelectedIndex()).getId() ;
+							r.setRoomId(idTemp);
+	
+							reservationAdministration.insertReservation(r, new AsyncCallback<Reservation>() {
 
 								public void onFailure(Throwable caught) {
 									Window.alert("Die Reservierung wurde aufgrund eines Fehlers nicht verschickt.");
 								}
 
 								@Override
-								public void onSuccess(Integer result) {
+								public void onSuccess(Reservation result) {
+									Window.alert(" " + result.getId());
+									Window.alert("Die Reservierung wurde aufgrund eines Fehlers nicht verschickt.");
 									
-									Window.alert("" + result);
-									ArrayList<Invitation> invitationListTemp = new ArrayList<Invitation>();
-
+ 									ArrayList<Invitation> invitationListTemp = new ArrayList<Invitation>();
 									for(int a =0; a < userInvitationArray.size(); a++){
 									Invitation i = new Invitation();
 									i.setAcceptionStatus(0);
-									i.setReservationId(result); 
+									i.setReservationId(result.getId()); 
 									i.setMemberId(userInvitationArray.get(a).getId());
 									invitationListTemp.add(i);
+									 
 									}
-									
-								 /*
-									reservationAdministration.insertInvitation(invitationListTemp, new AsyncCallback<Void>() {
+
+								/*	reservationAdministration.insertInvitation(invitationListTemp, new AsyncCallback<Void>() {
 
 										@Override
 										public void onFailure(Throwable caught) {
-											// TODO Auto-generated method stub
 											
 										}
 
 										@Override
 										public void onSuccess(Void result) {
-												Window.alert("Die Registrierung ist Abgeschlossen");											
+												Window.alert("juhu Die Registrierung ist Abgeschlossen");											
 										}
-										
-										
-										
-									});*/
 									
-									
-									
-									
+									});
+									*/
 								}});
 						}
 						
-						
-						
-						
-						
 					}
 				});
-				
-				
- 				
+						 
 				userAddBtn.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
- 						inviteUserTable.setText(0, 0, "Vorname");
+			
+						inviteUserTable.setText(0, 0, "Vorname");
 						inviteUserTable.setText(0, 1, "Nachname");
 						inviteUserTable.setText(0, 2, "E-Mail");
 						inviteUserTable.setText(0, 3, "Nickname");
 						inviteUserTable.setText(0, 4, "Teilnehmer entfernen");
 						inviteUserTable.setVisible(true);
 						inviteTablePanel.add(inviteUserTable);
-						int index = nicknameDropdown.getSelectedIndex();
-						String selectedNickname = nicknameDropdown.getValue(index);
+						 addUserListSelectedindex = nicknameDropdown.getSelectedIndex();
+						String selectedNickname = nicknameDropdown.getValue(addUserListSelectedindex);
 						
+						nicknameDropdown.getElement().getElementsByTagName("option").getItem(addUserListSelectedindex).setAttribute("disabled", "disabled");
+
 						reservationAdministration.loadUserDateByNickname(selectedNickname, new AsyncCallback<User>() {
 							@Override
 							public void onFailure(Throwable caught) {
@@ -1068,10 +974,14 @@ public class EditorCrudPanel extends VerticalPanel {
  							                  Cell c = inviteUserTable.getCellForEvent(event);
 							                  if(c != null) {
 							                      int cellIndex = c.getCellIndex();
+							                      
 							                       int rowIndex = c.getRowIndex();
  							                           if(rowIndex != 0 && rowIndex != (inviteUserTable.getRowCount())) {
 							                        	   inviteUserTable.removeRow(rowIndex);
+							                        		nicknameDropdown.getElement().getElementsByTagName("option").getItem(addUserListSelectedindex).setAttribute("enabled", "enabled");
+
 							                        	   userInvitationArray.remove(rowIndex-1);
+
 							                           }
 							                 }
 								    }
@@ -1090,7 +1000,7 @@ public class EditorCrudPanel extends VerticalPanel {
 			return null;
 		}
 			
-	  }  
+	  }
 
   public class EditReservation extends Showcase {
 	  
@@ -1101,19 +1011,19 @@ public class EditorCrudPanel extends VerticalPanel {
 		private final Button cancleReservationBtn = new Button("Abbrechen .");
 		private final Button editReservationBtn = new Button("Reservierungsdaten werden geändert.");
 		private final TextBox startTime = new TextBox();
-		private final TextBox length = new TextBox();
+		private final TextBox endTime = new TextBox();
 		private final TextBox room = new TextBox();
 		private final TextBox nickname = new TextBox();
 		private final TextBox topic = new TextBox();
 		private final Label startTimeLabel = new Label("Beginn der Reservierung");
-		private final Label lengthLabel = new Label("Dauer der Reservierung");
+		private final Label endTimeLabel = new Label("Dauer der Reservierung");
 		private final Label roomLabel = new Label("Raum auswählen");
 		private final Label nickNameLabel = new Label("Nutzer einladen");
 		private final Label topicLabel = new Label("Veranstaltungsbeschreibung");
 		private final Label DialogBoxHeadline = new Label("Reservierung bearbeiten");
 		private DialogBox dp= new DialogBox();
 		private Reservation re;
- 		
+
 		  public void loadReservationData(int reservationId){
 			
 			  cancleReservationBtn.addClickHandler(new ClickHandler() {
@@ -1121,14 +1031,14 @@ public class EditorCrudPanel extends VerticalPanel {
 						 dp.hide();
 						
 					}
-				});
+			  });
 				  
 					EditReservationPanel.add(DialogBoxHeadline);
 					ButtonPanel.add(cancleReservationBtn);
 					EditReservationPanel.add(startTimeLabel);
 					EditReservationPanel.add(startTime);
-					EditReservationPanel.add(lengthLabel);
-					EditReservationPanel.add(length);
+					EditReservationPanel.add(endTimeLabel);
+					EditReservationPanel.add(endTime);
 					EditReservationPanel.add(nickNameLabel);
 					EditReservationPanel.add(nickname);
 					EditReservationPanel.add(roomLabel);
@@ -1136,11 +1046,11 @@ public class EditorCrudPanel extends VerticalPanel {
 					EditReservationPanel.add(topicLabel);
 					EditReservationPanel.add(topic);
 					
-					 ButtonPanel.add(deleteReservationBtn);
-						ButtonPanel.add(editReservationBtn);
-						EditReservationPanel.add(ButtonPanel);
+					ButtonPanel.add(deleteReservationBtn);
+					ButtonPanel.add(editReservationBtn);
+					EditReservationPanel.add(ButtonPanel);
 
-				reservationAdministration.OneReservationById (1, new AsyncCallback<Reservation>() {
+					reservationAdministration.OneReservationById (reservationId, new AsyncCallback<Reservation>() {
 //
 					@Override
 					public void onFailure(Throwable caught) {
@@ -1150,18 +1060,18 @@ public class EditorCrudPanel extends VerticalPanel {
 //
 					@Override
 					public void onSuccess(Reservation result) {
-						Window.alert("Folgende Reservierung wurde geladen: " +  result.getTopic());
+					 	Window.alert("->Folgende Reservierung wurde geladen: " +  result.getTopic());
 						
-
+//					 	startTime.set(result.getStartTime());
+//					 	endTime.setValue(result.getEndTime());
+					 	topic.setText(result.getTopic());
 					 	RootPanel.get("content_wrap").add(EditReservationPanel);
 
-//
 					}
-//
+
 				});
 			//	  setWidget(EditReservationPanel);
 
- 		  
 		  }
 		
 		public Boolean updateReservation(Reservation r){
@@ -1171,7 +1081,7 @@ public class EditorCrudPanel extends VerticalPanel {
 					public void onFailure(Throwable caught) {
 						Window.alert("Reservierung konnte nicht ge�ndert werden.");
 					}
-//
+
 					@Override
 					public void onSuccess(Void result) {
 						Window.alert("Die Reservierungsdaten wurden ge�ndert.");						
@@ -1180,7 +1090,7 @@ public class EditorCrudPanel extends VerticalPanel {
 			  
 		  });
 				return null;
-			}
+		}
 		
 		  public void run() {
  			/*  editReservationBtn.addClickHandler(new ClickHandler() {
@@ -1207,54 +1117,39 @@ public class EditorCrudPanel extends VerticalPanel {
 					}
 				});*/
 
-		
-
-			 
-
 		  }
 		
-		public EditReservation() {
-			int reservationId = 1;
+		public EditReservation(int reservationId) {
+			 
 		 	RootPanel.get( ).clear();
  				  loadReservationData(reservationId);
  				 dp.setWidget(EditReservationPanel);
  				 dp.center();
  				 dp.show();
- 				 
- 				 
+ 				 	 
 		}
-//
 
 		@Override
 		public String getHeadline() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 	 
-	  
   }
 
-  
-  
-  
-  
-  public   class ShowInvitationStatus extends Showcase {
+  public class ShowInvitationStatus extends Showcase {
  
-		private DialogBox dp= new DialogBox();
+	  	private ReservationServiceAsync reservationAdministration = ClientSettings.getReservationService();
+	  
+	  	private DialogBox dp= new DialogBox();
 		private Button cancleBtn = new Button();
-
 		private VerticalPanel InvitationPanel = new VerticalPanel();
 		private final Label DialogBoxHeadline = new Label("Einladungen anzeigen");
 		private Reservation re;
 		private int selectReservationId;
-		private        List<InvitationListObj> InvitationList;
- 
-		  private ReservationServiceAsync reservationAdministration = ClientSettings.getReservationService();
+		private List<InvitationListObj> InvitationList;
 
-		  CellTable<InvitationListObj> InvitationTable = new CellTable<InvitationListObj>();
+		CellTable<InvitationListObj> InvitationTable = new CellTable<InvitationListObj>();
 
-
-		
 		public ShowInvitationStatus( int selectReservationId){
 			RootPanel.get( ).clear();
 			
@@ -1264,173 +1159,126 @@ public class EditorCrudPanel extends VerticalPanel {
 			 dp.center();
 			 dp.show();
 			
-
 		} 
-		
-		
-		
+
 		  public  List<InvitationListObj>  loadAllInvitationDataByOnReservationId(int reservationId){
- 			
-			  
+ 	  
 				reservationAdministration.loadInvitationsById( new  AsyncCallback<ArrayList<InvitationListObj>>(){
+					
 					@Override
 					public void onFailure(Throwable caught) {
 						Window.alert("fehler"  );
 					}
+					
 					@Override
 					public void onSuccess(ArrayList<InvitationListObj> result) {
 						
  						 InvitationList = result;
- 						 
- 						 
+ 						 		 
  						 for(int i =0; i < result.size(); i++){
  							 System.out.println(result.toString());
  						 }
  						//InvitationList.addAll(result);
  						
  						// Window.alert("a" + selectReservationId);
- 					TextColumn<InvitationListObj> idColumn = new TextColumn<InvitationListObj>() {
- 			       @Override
- 			       public String getValue(InvitationListObj object) {
- 			          return String.valueOf(object.getId());
+ 						 TextColumn<InvitationListObj> idColumn = new TextColumn<InvitationListObj>() {
+ 			       
+ 							 @Override
+ 							 public String getValue(InvitationListObj object) {
+ 								 return String.valueOf(object.getId());
  			          
- 			       }
- 			    };
+ 							 }
+ 						 };
+ 						 
  			    InvitationTable.addColumn(idColumn, "Teilnehmer");
- 			    
- 			    
 
- 			     TextColumn<InvitationListObj> fnColumn = new TextColumn<InvitationListObj>() {
- 			   @Override
- 			   public String getValue(InvitationListObj object) {
- 			      return String.valueOf(object.getFirstName());
+ 			    TextColumn<InvitationListObj> fnColumn = new TextColumn<InvitationListObj>() {
+ 			  
+ 			    	@Override
+ 			    	public String getValue(InvitationListObj object) {
+ 			    		return String.valueOf(object.getFirstName());
  			      
- 			   }
- 			};
+ 			    	}
+ 			    };
+ 			    
  			InvitationTable.addColumn(idColumn, "Vorname");
 
-
-
  			TextColumn<InvitationListObj> lnColumn = new TextColumn<InvitationListObj>() {
- 			@Override
- 			public String getValue(InvitationListObj object) {
- 			  return String.valueOf(object.getLastName());
+ 			
+ 				@Override
+ 				public String getValue(InvitationListObj object) {
+ 					return String.valueOf(object.getLastName());
  			  
- 			}
+ 				}
  			};
+ 			
  			InvitationTable.addColumn(idColumn, "Nachname");
 
+ 			TextColumn<InvitationListObj> emColumn = new TextColumn<InvitationListObj>() {
+ 			
+ 				@Override
+ 				public String getValue(InvitationListObj object) {
+ 					return String.valueOf(object.getEMail());
 
- 			 TextColumn<InvitationListObj> emColumn = new TextColumn<InvitationListObj>() {
- 			@Override
- 			public String getValue(InvitationListObj object) {
- 			return String.valueOf(object.getEMail());
-
- 			}
+ 				}
  			};
+ 			
  			InvitationTable.addColumn(idColumn, "E-Mail");
 
-
-
  			TextColumn<InvitationListObj> statusColumn = new TextColumn<InvitationListObj>() {
- 			@Override
- 			public String getValue(InvitationListObj object) {
- 			return String.valueOf(object.getAcceptionStatus());
+ 			
+ 				@Override
+ 				public String getValue(InvitationListObj object) {
+ 					return String.valueOf(object.getAcceptionStatus());
 
- 			}
+ 				}
  			};
+ 			
  			InvitationTable.addColumn(idColumn, "Teilnahmestatus");
- 			
- 			
- 		     
-		   
- 				      
+      
  				      ListDataProvider<InvitationListObj> dataProvider = new ListDataProvider<InvitationListObj>();
  					   
- 					   List<InvitationListObj> list = dataProvider.getList();
-  				 	   dataProvider.setList(InvitationList);
+ 					  List<InvitationListObj> list = dataProvider.getList();
+  				 	  dataProvider.setList(InvitationList);
 
-
- 					     for (InvitationListObj invitation : InvitationList) {
- 					       list.add(invitation);
- 					    }
-  					    dataProvider.addDataDisplay(InvitationTable);
-
- 					     
- 					     InvitationTable.setRowCount(20, true);
- 					      
- 					     InvitationTable.setWidth("100%");
- 					     InvitationTable.setRowData(0, InvitationList);
- 					     
- 					    InvitationPanel.add(DialogBoxHeadline);
- 						  InvitationPanel.add(InvitationTable);
- 						  InvitationPanel.add(cancleBtn);
- 					     
- 						
+  				 	  for (InvitationListObj invitation : InvitationList) {
+ 					      list.add(invitation);
+ 					  }
+  				 	   
+  					  dataProvider.addDataDisplay(InvitationTable);
+    
+ 					  InvitationTable.setRowCount(20, true);    
+ 					  InvitationTable.setWidth("100%");
+ 					  InvitationTable.setRowData(0, InvitationList);
+ 					  InvitationPanel.add(DialogBoxHeadline);
+ 					  InvitationPanel.add(InvitationTable);
+ 					  InvitationPanel.add(cancleBtn);
+ 					     	
 					}
-					});
- 			
-			  
-			  
+				});
 
 			  cancleBtn.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
-						 dp.hide();
-						
+						 dp.hide();		
 					}
-				});
-			return InvitationList;
+				
+			  });
 			  
-			  
-			  
- 
+			  return InvitationList;
+
 		  }  
-		 
-	 
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-	  
+
 	@Override
 	public String getHeadline() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 	@Override
 	public void run() {
-	//	 loadAllInvitationDataByOnReservationId(selectReservationId);
-	
-	      		
+	//	 loadAllInvitationDataByOnReservationId(selectReservationId);		
 	}
-	   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
   }  
-  
-  
   
 }

@@ -2,7 +2,6 @@ package de.hdm.rms.client;
 
 import java.util.ArrayList;
 import java.util.Vector;
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -11,7 +10,6 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-
 import de.hdm.rms.shared.ReservationServiceAsync;
 import de.hdm.rms.shared.bo.Reservation;
 import de.hdm.rms.shared.bo.Room;
@@ -31,48 +29,40 @@ public class ShowAllReservationsById extends Showcase {
 	 
 	//  private Room r;
 	
-	 
-public ArrayList<Reservation>  getArrayList(){
-	
-	
-	
-	return arrayList;
-	
-	
-	
-}
-	
-	public void loadAllReservationsByHostId(int temp_user_id){
-		
-		reservationAdministration.loadAllReservationsByHostId(temp_user_id, new  AsyncCallback<ArrayList<Reservation>>(){
-			@Override
-			public void onFailure(Throwable caught) {
-			}
-			@Override
-			public void onSuccess(ArrayList<Reservation> result) {
+	  public ArrayList<Reservation>  getArrayList(){
 
-				
-				arrayList = result;
-				//for(int i = 0; i< result.size(); i++){
-					
-				
-				//}
-				
-			
-			
-			}
-			});	
-	}
-	@Override
-	public String getHeadline() {
- 		return null;
-	}
-	@Override
-	public void run() {
- 		
-	}
-}
+		  return arrayList;
+
+	  }
 	
+		public void loadAllReservationsByHostId(int temp_user_id){
+			
+			reservationAdministration.loadAllReservationsByHostId(temp_user_id, new  AsyncCallback<ArrayList<Reservation>>(){
+				@Override
+				public void onFailure(Throwable caught) {
+				}
+				@Override
+				public void onSuccess(ArrayList<Reservation> result) {
+				
+					arrayList = result;
+					//for(int i = 0; i< result.size(); i++){
+
+					//}
+			
+				}
+				});	
+		}
+	
+		@Override
+		public String getHeadline() {
+			return null;
+		}
+	
+		@Override
+		public void run() {		
+		}
+}
+
 	/*
 	roomRegisterBtn.addClickHandler(new ClickHandler() {
 		public void onClick(ClickEvent event) {
@@ -101,8 +91,3 @@ public ArrayList<Reservation>  getArrayList(){
 			}
 	}
 	});*/
-	
-	
-	 
-
-
