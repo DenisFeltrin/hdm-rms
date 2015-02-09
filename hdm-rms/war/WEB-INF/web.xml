@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+              http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5"
+         xmlns="http://java.sun.com/xml/ns/javaee">
+
+  <!-- Servlets -->
+  
+   <servlet>
+    <servlet-name>reservationServiceServlet</servlet-name>
+    <servlet-class>de.hdm.rms.server.ReservationServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>reservationServiceServlet</servlet-name>
+    <url-pattern>/hdm_rms/reservationservice</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>reportServiceServlet</servlet-name>
+    <servlet-class>de.hdm.rms.server.ReportServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>reportServiceServlet</servlet-name>
+    <url-pattern>/hdm_rms/reportservice</url-pattern>
+  </servlet-mapping>
+  
+  <!-- Default page to serve -->
+  <welcome-file-list>
+    <welcome-file>Hdm_rms.html</welcome-file>
+  </welcome-file-list>
+
+</web-app>
