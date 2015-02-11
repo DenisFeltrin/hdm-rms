@@ -1,0 +1,2 @@
+serviceClass: de.hdm.rms.shared.ReservationService
+path: 0954AE883B30B68F6E72F2F0585354CC.gwt.rpc

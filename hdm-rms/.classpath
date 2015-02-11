@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/mysql-connector-java-5.1.30-bin.jar"/>
+	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/google-api-client-1.6.0-beta.jar"/>
+	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/google-oauth-client-1.5.0-beta.jar"/>
+	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/gwt-oauth2-0.2-alpha.jar"/>
+	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/jackson-core-asl-1.9.1.jar"/>
+	<classpathentry exported="true" kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
+	<classpathentry kind="output" path="war/WEB-INF/classes"/>
+</classpath>
