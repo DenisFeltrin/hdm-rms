@@ -301,7 +301,7 @@ public class ReservationMapper {
 		try {
 			Statement state = con.createStatement();
 			
-			ResultSet result = state.executeQuery("SELECT Reservation.Topic, Reservation.HostId, Reservation.Id, Room.Name, Room.Capacity, User.Nickname, User.EMail, Reservation.Topic, Reservation.StartTime, Reservation.EndTime FROM (Room Inner JOIN Reservation ON Room.Id = Reservation.RoomId) Inner JOIN User ON User.Id = Reservation.HostId WHERE User.Id =' " + 2 + " '");
+			ResultSet result = state.executeQuery("SELECT Reservation.Topic, Reservation.HostId, Reservation.Id, Room.Name, Room.Capacity, User.Nickname, User.EMail, Reservation.Topic, Reservation.StartTime, Reservation.EndTime FROM (Room Inner JOIN Reservation ON Room.Id = Reservation.RoomId) Inner JOIN User ON User.Id = Reservation.HostId WHERE User.Id =' " + userId + " '");
 			while (result.next() ) {
 			 
 				ReservationListObj r = new ReservationListObj(); 
@@ -310,8 +310,8 @@ public class ReservationMapper {
 				r.setEndTime(result.getString("EndTime"));
 				r.setStartTime(result.getString("StartTime"));
  				r.setTopic(result.getString("Topic"));
-			r.setCapacity(result.getString("Capacity"));
-			r.setRoomName(result.getString("Name"));
+ 				r.setCapacity(result.getString("Capacity"));
+ 				r.setRoomName(result.getString("Name"));
 
  			//	r.setFirstname(result.getString("Firstname"));
 			//	r.setLastname(result.getString("Lastname"));

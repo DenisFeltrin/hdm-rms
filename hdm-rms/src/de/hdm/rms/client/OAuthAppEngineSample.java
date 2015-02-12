@@ -129,8 +129,15 @@ public class OAuthAppEngineSample implements EntryPoint {
 																.get("head_wrap_right")
 																.add(h.zeigePanel());
 													} else {
-														EditorCrudPanel CrudPanelCreateUser = new EditorCrudPanel();
-														CrudPanelCreateUser.new CreateUser();
+														////EditorCrudPanel CrudPanelCreateUser = new EditorCrudPanel();
+														//CrudPanelCreateUser.new CreateUser();
+														
+														RootPanel
+														.get("head_wrap_right")
+														.clear();
+												RootPanel
+														.get("head_wrap_right")
+														.add(h.zeigePanel());
 													}
 												}
 

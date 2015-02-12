@@ -141,7 +141,7 @@ public class RoomMapper {
 				Room r = new Room();
 				r.setId(result.getInt("Id"));
 				r.setName(result.getString("Name"));
-				// r.setCapaticity(result.getString("Capaticty"));
+				 r.setCapaticity(result.getString("Capacity"));
 
 				resultList.add(r);
 			}

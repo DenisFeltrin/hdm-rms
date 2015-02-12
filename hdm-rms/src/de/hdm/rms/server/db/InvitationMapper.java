@@ -127,7 +127,7 @@ public class InvitationMapper {
 				i.setLastName(result.getString("Lastname"));
 				i.setEMail(result.getString("EMail"));
 				i.setAcceptionStatus(result.getInt("acceptionStatus"));
-//				i.setNickname(result.getString("Topic"));
+				i.setNickname(result.getString("Nickname"));
 //				r.setCapacity(result.getInt("Capacity"));
 				resultList.add(i); // Add person-object to Arraylist
 			 }
@@ -268,9 +268,34 @@ public class InvitationMapper {
 		}
 
 		return resultList;
+		
+	}
+	
+	public ArrayList<UserRms> loadUsersToInvTable (int temp_res_id){
+		
+		Connection con = DatebaseConnection.connection();
 		 
-		
-		
+		ArrayList<UserRms> resultList = new ArrayList<>();
+		try {
+			Statement state = con.createStatement();
+			
+			ResultSet result = state.executeQuery("SELECT User.Nickname, User.EMail FROM (Reservation Inner JOIN Invitation ON Reservation.Id=Invitation.ReservationId) Inner JOIN User ON User.Id=Invitation.MemberId WHERE Reservation.Id = '" + temp_res_id + "';");
+			while (result.next() ) {
+
+				UserRms u = new UserRms(); 
+				u.setId(result.getInt("Id"));
+				u.setNickName(result.getString("NickName"));
+ 				u.setEmailAdress(result.getString("emailAdress"));
+
+				resultList.add(u);
+
+			 }
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return resultList;
 		
 	}
 	

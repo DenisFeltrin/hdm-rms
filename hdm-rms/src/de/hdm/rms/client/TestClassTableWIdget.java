@@ -280,7 +280,7 @@ private int acceptionStatus = 0;
 													// Window.alert("a" +
 													// selectReservationId);
 
-													loadAllInvitationDataByOnReservationListObj(2);
+													loadAllInvitationDataByOnReservationListObj(selected.getId());
 
 													final Label DialogBoxHeadline = new Label(
 															"Einladungen anzeigen");
@@ -413,22 +413,7 @@ private int acceptionStatus = 0;
 						table1.addColumn(hosterColumn, "Veranstalter [Nickname / E-Mail]");
 						
 
-						TextColumn<InvitationListObj> statusCol = new TextColumn<InvitationListObj>() {
-							@Override
-							public String getValue(InvitationListObj object) {
-								
-								if(object.getAcceptionStatus()==1){
-									return String.valueOf("Einladung angenommen.");
-								}
-								if(object.getAcceptionStatus()==2){
-									return String.valueOf("Einladung abgelehnt.");
-								}else{
-									return String.valueOf("Einladung wurde verschickt.");
-								}
-										
-							}
-						};
-						table1.addColumn(statusCol, "Teilnahmestatus");
+					 
 
 						/*
 						 * Test Kommentar DatenProvider wird ausgewählt wird

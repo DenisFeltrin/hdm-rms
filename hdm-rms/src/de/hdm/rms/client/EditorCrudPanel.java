@@ -775,20 +775,17 @@ public class EditorCrudPanel extends VerticalPanel {
 
 		private final Label startDayLabel = new Label("Bitte den Tag auswählen");
 
-		private int invitationTableCellCounter = 1;
-		private int row = 1;
+		private int row0 = 1;
+		private int row = 2;
+
 		private ArrayList<UserRms> userInvitationArray = new ArrayList<UserRms>();
 		private ArrayList<Room> selectedRoomArray = new ArrayList<Room>();
-
-		private final Invitation i = new Invitation();
 
 		private final Label roomLabel = new Label("Raum auswählen");
 		private final Label nickNameLabel = new Label("Nutzer einladen");
 		private final Label topicLabel = new Label("Veranstaltungsbeschreibung");
 
 		private final FlexTable inviteUserTable = new FlexTable();
-		private final Button removeStockButton = new Button("x");
-
 		String email;
 		String selectedNickname;
 
@@ -808,15 +805,6 @@ public class EditorCrudPanel extends VerticalPanel {
 		public CreateReservation() {
 
 			inviteUserTable.setVisible(false);
-
-			// super.get("content_wrap").clear();
-			/*
-			 * DateTimeFormat dateFormat=DateTimeFormat.getFormat("dd.MM.yyyy");
-			 * startDay.setFormat(new DateBox.DefaultFormat(dateFormat));
-			 * startDay.getDatePicker().setYearArrowsVisible(true); Date a =
-			 * startDay.getValue();
-			 */
-
 			CreateReservationPanel.add(memLabel);
 			CreateReservationPanel.add(memLabelText);
 			CreateReservationPanel.add(topicLabel);
@@ -880,6 +868,8 @@ public class EditorCrudPanel extends VerticalPanel {
 							selectedRoomArray = result;
 							roomDropdown.addItem("---");
 							for (int i = 0; i < result.size(); i++) {
+								
+								System.out.println(result.get(i).getCapaticity());
 								roomDropdown.addItem(result.get(i).getName()
 										+ "  [" + result.get(i).getCapaticity()
 										+ " " + "Plätze ]" + " " + "  [ R-ID:"
@@ -1071,22 +1061,6 @@ public class EditorCrudPanel extends VerticalPanel {
 						                CreateInvitation cr = new CreateInvitation();
 						                cr.insertInvitation(invitationListTemp);
 						                cr.sendInvitation(userInvitationArray,sendMailReservationTemp,selectedRoomTemp, hostidtemp );
-										
-//										 reservationAdministration.insertInvitation(invitationListTemp,
-//										 new AsyncCallback<Void>() {
-//										
-//										 @Override
-//										 public void onFailure(Throwable
-//										 caught) {
-//										
-//										 }
-//										
-//										 @Override
-//										 public void onSuccess(Void result) {
-//										 Window.alert("juhu Die Registrierung ist Abgeschlossen");
-//										 }
-//										
-//										 });
 
 									}
 								});
@@ -1108,7 +1082,7 @@ public class EditorCrudPanel extends VerticalPanel {
 					addUserListSelectedindex = nicknameDropdown.getSelectedIndex();
 					String selectedNickname = nicknameDropdown.getValue(addUserListSelectedindex);
 
-					nicknameDropdown.getElement().getElementsByTagName("option").getItem(addUserListSelectedindex).setAttribute("disabled", "disabled");
+//					nicknameDropdown.getElement().getElementsByTagName("option").getItem(addUserListSelectedindex).setAttribute("disabled", "disabled");
 
 					reservationAdministration.loadUserDateByNickname(
 							selectedNickname, new AsyncCallback<UserRms>() {
@@ -1119,25 +1093,109 @@ public class EditorCrudPanel extends VerticalPanel {
 
 								@Override
 								public void onSuccess(UserRms result) {
-									userInvitationArray.add(result);
-									// HashSet hs = new HashSet();
-									// hs.addAll(userInvitationArray);
-									// userInvitationArray.clear();
-									// userInvitationArray.addAll(hs);
-									final Button deleteUserBtn = new Button(
-											"entfernen");
-									inviteUserTable.setText(row, 0,
-											result.getFirstName());
-									inviteUserTable.setText(row, 1,
-											result.getLastName());
-									inviteUserTable.setText(row, 2,
-											result.getEmailAdress());
-									inviteUserTable.setText(row, 3,
-											result.getNickName());
-									inviteUserTable.setWidget(row, 4,
-											deleteUserBtn);
+									int capInt = Integer.parseInt(selectedRoomArray.get(roomDropdown.getSelectedIndex()).getCapaticity());
 
-									deleteUserBtn.addClickHandler(new ClickHandler() {
+									if (userInvitationArray.size() == 0) {
+										userInvitationArray.add(result);
+										final Button deleteUserBtn = new Button(
+												"entfernen");
+										inviteUserTable.setText(row0, 0,
+												result.getFirstName());
+										inviteUserTable.setText(row0, 1,
+												result.getLastName());
+										inviteUserTable.setText(row0, 2,
+												result.getEmailAdress());
+										inviteUserTable.setText(row0, 3,
+												result.getNickName());
+										inviteUserTable.setWidget(row0, 4,
+												deleteUserBtn);
+										
+										
+										
+										deleteUserBtn.addClickHandler(new ClickHandler() {
+											@Override
+											public void onClick(
+													ClickEvent event) {
+												Cell c = inviteUserTable
+														.getCellForEvent(event);
+												if (c != null) {
+													int cellIndex = c
+															.getCellIndex();
+
+													int rowIndex = c
+															.getRowIndex();
+													if (rowIndex != 0
+															&& rowIndex != (inviteUserTable
+																	.getRowCount())) {
+														inviteUserTable
+																.removeRow(rowIndex);
+
+														userInvitationArray
+																.remove(rowIndex - 1);
+
+													}
+												}					
+
+											}
+										});
+										
+										
+										
+
+									}
+									else if(userInvitationArray.size() != 0){
+										
+										int checkstat = 0; 
+										int checkstat2 = 0; 
+
+										for (int i = 0; i < userInvitationArray.size(); i++ ){
+											checkstat =0;
+
+										if (result.getFirstName() == userInvitationArray.get(i).getFirstName()) {
+										 	
+											checkstat =2;
+											Window.alert("Der User ist bereits auf der Teilnehmerliste");
+										}   
+										
+									 
+										}
+	
+										
+										
+										
+										
+										
+										if (userInvitationArray.size() == capInt ) {
+											checkstat2 =2;
+											System.out.println(  "CHECK2"  + checkstat);
+
+											Window.alert("Bitte achten Sie auf die Raumkappazität und die Teilnehmeranzahl");
+
+										}
+										
+										if (checkstat != 2  && checkstat2 !=2 ){
+											System.out.println(capInt + " - " + userInvitationArray.size() );
+
+											userInvitationArray.add(result);
+											
+											System.out.println(row + " ROWW" );
+
+											
+											final Button deleteUserBtn = new Button(
+													"entfernen");
+											inviteUserTable.setText(row, 0,
+													result.getFirstName());
+											inviteUserTable.setText(row, 1,
+													result.getLastName());
+											inviteUserTable.setText(row, 2,
+													result.getEmailAdress());
+											inviteUserTable.setText(row, 3,
+													result.getNickName());
+											inviteUserTable.setWidget(row, 4,
+													deleteUserBtn);
+										  
+											
+											deleteUserBtn.addClickHandler(new ClickHandler() {
 												@Override
 												public void onClick(
 														ClickEvent event) {
@@ -1166,12 +1224,25 @@ public class EditorCrudPanel extends VerticalPanel {
 
 															userInvitationArray
 																	.remove(rowIndex - 1);
+															nicknameDropdown.getElement().getElementsByTagName("option").getItem(addUserListSelectedindex).setAttribute("enabled", "enabled");
 
 														}
-													}
+													}					
+
 												}
-											});
-									row++;
+											});	row++;
+											
+										}
+									 
+										
+									}  
+										
+										
+									 	
+							
+
+								
+								
 								}
 							});
 
@@ -1306,7 +1377,6 @@ public class EditorCrudPanel extends VerticalPanel {
 
 										}
 									});
-							// RootPanel.get("content_wrap").add(EditReservationPanel);
 
 						}
 
@@ -1353,24 +1423,6 @@ public class EditorCrudPanel extends VerticalPanel {
 		}
 
 		public void run() {
-			/*
-			 * editReservationBtn.addClickHandler(new ClickHandler() { public
-			 * void onClick(ClickEvent event) { if
-			 * (startTime.getValue().isEmpty() || length.getValue().isEmpty() ||
-			 * room.getValue().isEmpty() || nickname.getValue().isEmpty() ||
-			 * topic.getValue().isEmpty()) {
-			 * Window.alert("Die Reservierung konnte nicht geladen werden.");
-			 * 
-			 * } else {
-			 * 
-			 * Reservation r = new Reservation(); startTime.getText();
-			 * length.getText(); room.getText(); nickname.getText();
-			 * topic.getText(); updateReservation(r);
-			 * 
-			 * }
-			 * 
-			 * } });
-			 */
 
 		}
 
@@ -1410,7 +1462,6 @@ public class EditorCrudPanel extends VerticalPanel {
 			RootPanel.get().clear();
 
 			loadAllInvitationDataByOnReservationId(selectReservationId);
-			// Window.alert("a" + selectReservationId);
 			dp.setWidget(InvitationPanel);
 			dp.center();
 			dp.show();
@@ -1481,8 +1532,7 @@ public class EditorCrudPanel extends VerticalPanel {
 
 								}
 							};
-							InvitationTable.addColumn(idColumn,
-									"Teilnahmestatus");
+							InvitationTable.addColumn(idColumn, "Teilnahmestatus");
 
 							ListDataProvider<InvitationListObj> dataProvider = new ListDataProvider<InvitationListObj>();
 
@@ -1518,13 +1568,11 @@ public class EditorCrudPanel extends VerticalPanel {
 
 		@Override
 		public String getHeadline() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
 		@Override
 		public void run() {
-			// loadAllInvitationDataByOnReservationId(selectReservationId);
 
 		}
 

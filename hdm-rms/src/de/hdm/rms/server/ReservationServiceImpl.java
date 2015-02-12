@@ -563,13 +563,22 @@ public class ReservationServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public ArrayList<InvitationListObj> loadAllInvitationData(int temp_user_id) {
  
-		System.out.println( temp_user_id  + " -- Innovation User ID --");
-ArrayList<InvitationListObj> reservationlist = iMapper.loadallInvitationAsList(temp_user_id);
+		ArrayList<InvitationListObj> reservationlist = iMapper.loadallInvitationAsList(temp_user_id);
 		if (!reservationlist.isEmpty()) {
 			return reservationlist;		
 		} else {
 			return null;
 		}
+	}
+	public ArrayList<UserRms> getUsersToInvTable(int temp_res_id){
+		
+		ArrayList<UserRms> invitationList = iMapper.loadUsersToInvTable(temp_res_id);
+		if(!invitationList.isEmpty()){
+			return invitationList;
+		}else {
+			return null;
+		}
+		
 	}
 
 }
